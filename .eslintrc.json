@@ -5,11 +5,11 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
         "prettier",
-        
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime"
     ],
+    "plugins": ["react", "prettier"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -17,8 +17,10 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react"],
     "rules": {
+        "prettier/prettier": "error",
+        "camelcase": ["error"],
+        "eqeqeq": ["error", "always"],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
 }
