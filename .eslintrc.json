@@ -9,7 +9,7 @@
         "plugin:react/recommended",
         "plugin:react/jsx-runtime"
     ],
-    "plugins": ["react", "prettier"],
+    "plugins": ["react"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
