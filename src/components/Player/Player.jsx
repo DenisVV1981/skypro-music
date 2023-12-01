@@ -1,3 +1,5 @@
+import './Player.css'
+
 function Player() {
 return (
     <div className="bar__player player">
