@@ -195,4 +195,10 @@
     text-align: right;
     color: #696969;
   }
-  
+
+
+.sceleton > track__title-image{
+    width: 250px;
+    height: 150px;
+    color: white;
+}
