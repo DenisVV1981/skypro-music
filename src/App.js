@@ -4,7 +4,7 @@ import Player from './components/Player/Player.jsx';
 import Volume from './components/Volume/Volume.jsx';
 import SidebarUserInfo from './components/SideBar/SidebarUserInfo.jsx';
 import SidebarContent from './components/SideBar/SidebarContent.jsx';
-import PlaylistContent from './components/Playlist/PlaylistContent.jsx';
+import PlaylistContent from './components/PlaylistContent/PlaylistContent.jsx';
 import MainNavigation from './components/Navigation/MainNavigation.jsx';
 import FilterContent from './components/FilterContent/Filter.jsx';
 import SearchContent from './components/SearchContent/SearchContent.jsx';
@@ -15,12 +15,12 @@ function App() {
     <div className="wrapper">
       <div className="container">
         <main className="main">
-          < MainNavigation />
+          <MainNavigation/>
           <div className="main__centerblock centerblock">
-              < SearchContent />
+              <SearchContent/>
             <h2 className="centerblock__h2">Треки</h2>
-              < FilterContent />
-              < PlaylistContent />
+              <FilterContent/>
+              <PlaylistContent/>
           </div>
           <div className="main__sidebar sidebar">
               < SidebarUserInfo />
@@ -31,8 +31,8 @@ function App() {
           <div className="bar__content">
             <div className="bar__player-progress"></div>
             <div className="bar__player-block">
-                < Player />
-                < Volume />
+                <Player/>
+                <Volume/>
             </div>
           </div>
         </div>
