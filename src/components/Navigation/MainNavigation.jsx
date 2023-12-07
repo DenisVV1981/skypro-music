@@ -4,7 +4,6 @@ import {useState} from 'react';
 function MainNavigation() {
 
 const [visible, setVisible] = useState(true);
-
 const toggleVisibility = () => {setVisible(!visible);};
 
     return (

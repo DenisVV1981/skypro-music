@@ -1,19 +1,29 @@
-import './Filter.css'
+import './Filter.css';
+import {useState} from 'react';
 
-function FilterContent() {
-return (
-    <div className="centerblock__filter filter">
-    <div className="filter__title">Искать по:</div>
-    <div className="filter__button button-author _btn-text">
-      исполнителю
-    </div>
-    <div className="filter__button button-year _btn-text">
-      году выпуска
-    </div>
-    <div className="filter__button button-genre _btn-text">жанру</div>
-  </div>
-);
+function Filter(props) {
 
-}
+    const [visible, setVisible] = useState(false);
+    const toggleVisibility = () => {setVisible(!visible);};
 
-export default FilterContent;
+    return (
+        <div>
+            <div onClick={toggleVisibility} className="filter__button button-author _btn-text">
+                {props.filtername}
+            </div>
+            {visible && (
+                <div >
+                    <ul>
+                        {props.items.map((item)=>{
+                            return <li> {item} </li>
+                        })}
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
+};
+
+
+
+export default Filter;
