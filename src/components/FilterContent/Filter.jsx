@@ -1,26 +1,24 @@
 import './Filter.css';
-import {useState} from 'react';
+import React from 'react'
 
 function Filter(props) {
-
-    const [visible, setVisible] = useState(false);
-    const toggleVisibility = () => {setVisible(!visible);};
-
     return (
-        <div >
-            <div onClick={toggleVisibility} className="filter__button button-author _btn-text">
-                {props.filtername}
+        <React.Fragment>
+            <div onClick={props.onClickCallback} className="filter__button button-author _btn-text">
+                
+                <div>{props.filtername}</div>
+            
+                {props.visible && (
+                    <div class="filter-panel">
+                        <ul class="filter-list">
+                            {props.items.map((item)=>{
+                                return <li> {item} </li>
+                            })}
+                        </ul>
+                    </div>
+                )}
             </div>
-            {visible && (
-                <div class="filter-panel">
-                    <ul class="filter-list">
-                        {props.items.map((item)=>{
-                            return <li> {item} </li>
-                        })}
-                    </ul>
-                </div>
-            )}
-        </div>
+        </React.Fragment>
     );
 };
 

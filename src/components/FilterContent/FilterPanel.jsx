@@ -1,23 +1,40 @@
 import './FilterPanel.css';
 import Filter from './Filter.jsx';
+import {useState} from 'react';
 
 function FilterPanel() {
-return (
+
+  const [visibleFilter, setVisible] = useState(null);
+  const toggleVisibility = (value) => {
+    if(value === visibleFilter){
+      setVisible(null);
+    }
+    else{
+      setVisible(value);  
+    }
+  };
+
+  return (
     <div className="centerblock__filter filter">
     <div className="filter__title">Искать по:</div>
 
-    <Filter filtername="исполнителю" items={["яблоко", "банан", "карица полей"]}></Filter>
-    <Filter filtername="году выпуска" items={["1991", "2005", "2021"]}></Filter>
-    <Filter filtername="жанру" items={["Pop", "Rock", "Jazz"]}></Filter>
+    <Filter 
+      onClickCallback={() => toggleVisibility("author")} 
+      visible={visibleFilter === "author"}
+      filtername="исполнителю" 
+      items={["Nero", "Dynoro, Outwork, Mr. Gee", "Jaded, Will Clarke, AR/CO", "Ali Bakgor"]}></Filter>
 
-    {/* <div className="filter__button button-author _btn-text">
-      исполнителю
-    </div>
-    <div className="filter__button button-year _btn-text">
-      году выпуска
-    </div>
-    <div className="filter__button button-genre _btn-text">жанру</div> */}
+    <Filter
+      onClickCallback={() => toggleVisibility("year")} 
+      visible={visibleFilter === "year"}
+      filtername="году выпуска" 
+      items={["1991", "2005", "2021"]}></Filter>
 
+    <Filter
+      onClickCallback={() => toggleVisibility("genre")} 
+      visible={visibleFilter === "genre"}
+      filtername="жанру" 
+      items={["Pop", "Rock", "Jazz"]}></Filter>
   </div>
 );
 

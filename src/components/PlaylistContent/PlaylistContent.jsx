@@ -7,7 +7,7 @@ function PlaylistContent() {
   useEffect(()=>{
     setTimeout(()=>{
       setSceleton(false);
-    }, 500000  );
+    }, 5000  );
   });
 
     return (

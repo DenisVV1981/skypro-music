@@ -7,7 +7,7 @@ function SidebarContent() {
   useEffect(()=>{
     setTimeout(()=>{
       setSceleton(false);
-    },  10000 );
+    },  5000 );
   });
 
     return ( <div>

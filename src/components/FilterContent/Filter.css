@@ -34,9 +34,8 @@
   gap: 10px;
   border-radius: 12px;
   background: #313131;
-  margin-bottom: 10px;
   margin-top: 10px;
-
+  margin-left: -20px;
 }
 
 .filter-list {
