@@ -7,13 +7,13 @@ function Filter(props) {
     const toggleVisibility = () => {setVisible(!visible);};
 
     return (
-        <div>
+        <div >
             <div onClick={toggleVisibility} className="filter__button button-author _btn-text">
                 {props.filtername}
             </div>
             {visible && (
-                <div >
-                    <ul>
+                <div class="filter-panel">
+                    <ul class="filter-list">
                         {props.items.map((item)=>{
                             return <li> {item} </li>
                         })}

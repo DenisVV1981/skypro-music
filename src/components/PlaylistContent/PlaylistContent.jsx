@@ -7,7 +7,7 @@ function PlaylistContent() {
   useEffect(()=>{
     setTimeout(()=>{
       setSceleton(false);
-    }, 5000  );
+    }, 500000  );
   });
 
     return (
@@ -29,27 +29,178 @@ function PlaylistContent() {
               <div className="playlist__track track">
                 <div className="track__title">
                   <div className="track__title-image">
-                
                   </div>
-                  <div className="track__title-text">
-                    <a className="track__title-link" href="http://"> <span className="track__title-span"></span></a>
+                  <div className="track__title-text"> 
                   </div>
                 </div>
                 <div className="track__author">
-                  <a className="track__author-link" href="http://"></a>
+                 
                 </div>
                 <div className="track__album">
-                  <a className="track__album-link" href="http://"></a>
+                  
                 </div>
                 <div className="track__time">
                   <svg className="track__time-svg" alt="time">
-                    <use xlinkHref ="img/icon/sprite.svg#icon-like"></use>
+                    
                   </svg>
                   <span className="track__time-text"></span>
                 </div>
               </div>
             </div>
-
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                    
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                    
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                  
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                  
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                  
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                    
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
+            <div className="playlist__item">
+              <div className="playlist__track track">
+                <div className="track__title">
+                  <div className="track__title-image">
+                  </div>
+                  <div className="track__title-text"> 
+                  </div>
+                </div>
+                <div className="track__author">
+                 
+                </div>
+                <div className="track__album">
+                  
+                </div>
+                <div className="track__time">
+                  <svg className="track__time-svg" alt="time">
+                    
+                  </svg>
+                  <span className="track__time-text"></span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
         
