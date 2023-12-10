@@ -10,11 +10,12 @@ function Filter(props) {
             
                 {props.visible && (
                     <div class="filter-panel">
+                        <div>
                         <ul class="filter-list">
                             {props.items.map((item)=>{
                                 return <li> {item} </li>
                             })}
-                        </ul>
+                        </ul></div>
                     </div>
                 )}
             </div>

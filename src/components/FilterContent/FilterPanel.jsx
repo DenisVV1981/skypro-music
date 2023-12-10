@@ -22,13 +22,13 @@ function FilterPanel() {
       onClickCallback={() => toggleVisibility("author")} 
       visible={visibleFilter === "author"}
       filtername="исполнителю" 
-      items={["Nero", "Dynoro, Outwork, Mr. Gee", "Jaded, Will Clarke, AR/CO", "Ali Bakgor"]}></Filter>
+      items={["Nero", "Hero", "fEREro", "Dynoro, Outwork, Mr. Gee", "Jaded, Will Clarke, AR/CO", "Ali Bakgor", "Ali Bakgor", "Ali Bakgor", "Ali Bakgor", "Ali Bakgor"]}></Filter>
 
     <Filter
       onClickCallback={() => toggleVisibility("year")} 
       visible={visibleFilter === "year"}
       filtername="году выпуска" 
-      items={["1991", "2005", "2021"]}></Filter>
+      items={["1991", "2005", "2021", "2022", "2023", "2024", "2025"]}></Filter>
 
     <Filter
       onClickCallback={() => toggleVisibility("genre")} 
