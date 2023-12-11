@@ -2,6 +2,10 @@ import './FilterPanel.css';
 import Filter from './Filter.jsx';
 import {useState} from 'react';
 
+
+
+
+
 function FilterPanel() {
 
   const [visibleFilter, setVisible] = useState(null);
