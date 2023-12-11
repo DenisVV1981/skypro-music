@@ -1,8 +1,32 @@
-import './SidebarContent.css'
+import './SidebarContent.css';
+import {useState, useEffect} from 'react';
 
 function SidebarContent() {
-    return (
-        <div className="sidebar__block">
+
+  const [sceleton, setSceleton] = useState(true);
+  useEffect(()=>{
+    setTimeout(()=>{
+      setSceleton(false);
+    },  5000 );
+  });
+
+    return ( <div>
+
+{sceleton && (
+        <div className="sidebar__block sceleton ">
+          <div className="sidebar__list">
+            <div className="sidebar__item">
+            </div>
+            <div className="sidebar__item">
+            </div>
+            <div className="sidebar__item">
+            </div>
+          </div>
+        </div>   
+      )}
+
+      {!sceleton && (
+            <div className="sidebar__block">
               <div className="sidebar__list">
                 <div className="sidebar__item">
                   <a className="sidebar__link" href="#">
@@ -33,6 +57,9 @@ function SidebarContent() {
                 </div>
               </div>
             </div>
+      )} 
+      
+    </div>   
     );
 }
 

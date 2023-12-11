@@ -1,19 +1,41 @@
 import './PlaylistContent.css'
+import {useState, useEffect} from 'react';
+import PlaylistSceletonRow from './PlaylistSceletonRow';
 
 function PlaylistContent() {
-    return (
-      <div className="centerblock__content">
-        <div className="content__title playlist-title">
-          <div className="playlist-title__col col01">Трек</div>
-          <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
-          <div className="playlist-title__col col03">АЛЬБОМ</div>
-          <div className="playlist-title__col col04">
-            <svg className="playlist-title__svg" alt="time">
-              <use xlinkHref ="img/icon/sprite.svg#icon-watch"></use>
-            </svg>
-          </div>
+  const [sceleton, setSceleton] = useState(true);
+  useEffect(()=>{
+    setTimeout(()=>{
+      setSceleton(false);
+    }, 5000  );
+  });
+
+  return (
+    <div className="centerblock__content">
+      <div className="content__title playlist-title">
+        <div className="playlist-title__col col01">Трек</div>
+        <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
+        <div className="playlist-title__col col03">АЛЬБОМ</div>
+        <div className="playlist-title__col col04">
+          <svg className="playlist-title__svg" alt="time">
+            <use xlinkHref ="img/icon/sprite.svg#icon-watch"></use>
+          </svg>
         </div>
-        
+      </div>
+      
+      {sceleton && (
+        <div className="content__playlist playlist">
+          <PlaylistSceletonRow/>
+          <PlaylistSceletonRow/>
+          <PlaylistSceletonRow/>
+          <PlaylistSceletonRow/>
+          <PlaylistSceletonRow/>
+          <PlaylistSceletonRow/>
+          <PlaylistSceletonRow/>
+        </div>
+      )}
+      
+      {!sceleton && (
         <div className="content__playlist playlist">
           <div className="playlist__item">
             <div className="playlist__track track">
@@ -182,8 +204,9 @@ function PlaylistContent() {
             </div>
           </div>
         </div>
-      </div>
-    );
+      )}
+    </div>
+  );
 }
 
 export default PlaylistContent;

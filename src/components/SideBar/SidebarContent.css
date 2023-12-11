@@ -45,3 +45,9 @@
     width: 100%;
     height: auto;
   }
+
+  .sceleton .sidebar__item{
+    width: 250px;
+    height: 150px;
+    background-color: #313131;
+  }

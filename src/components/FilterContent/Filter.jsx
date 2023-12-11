@@ -1,19 +1,27 @@
-import './Filter.css'
+import './Filter.css';
+import React from 'react'
 
-function FilterContent() {
-return (
-    <div className="centerblock__filter filter">
-    <div className="filter__title">Искать по:</div>
-    <div className="filter__button button-author _btn-text">
-      исполнителю
-    </div>
-    <div className="filter__button button-year _btn-text">
-      году выпуска
-    </div>
-    <div className="filter__button button-genre _btn-text">жанру</div>
-  </div>
-);
+function Filter(props) {
+    return (
+        
+            <div onClick={props.onClickCallback} className="filter__button button-author _btn-text">
+                
+                <div>{props.filtername}</div>
+            
+                {props.visible && (
+                    <div class="filter-panel">
+                        <div>
+                        <ul class="filter-list">
+                            {props.items.map((item)=>{
+                                return <li> {item} </li>
+                            })}
+                        </ul></div>
+                    </div>
+                )}
+            </div>
+    );
+};
 
-}
 
-export default FilterContent;
+
+export default Filter;
