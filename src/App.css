@@ -61,6 +61,18 @@ body {
 
 
 
+  
+button,
+._btn {
+  cursor: pointer;
+}
+
+._btn-text:active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
+
 ._btn-icon:hover svg {
   fill: transparent;
   stroke: #acacac;
@@ -68,6 +80,17 @@ body {
 }
 
 
+._btn-icon:active svg {
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+._btn-icon:hover svg {
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
 
 ._btn-icon:active svg {
   fill: transparent;
@@ -200,4 +223,26 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+.player__track-play {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.track-play__contain {
+  width: auto;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "image author""image album";
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }

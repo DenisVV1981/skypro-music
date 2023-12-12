@@ -1,70 +1,67 @@
-import './Player.css'
+import * as S from './Player.styles';
+import React from 'react';
 
-function Player() {
+
+export default function Player() {
 return (
-    <div className="bar__player player">
-                <div className="player__controls">
-                  <div className="player__btn-prev">
-                    <svg className="player__btn-prev-svg" alt="prev">
+    <S.BarPlayer>
+                <S.PlayerControls>
+                  <S.PlayerButtonPrev>
+                    <S.PreviosSvg alt="prev">
                       <use xlinkHref ="img/icon/sprite.svg#icon-prev"></use>
-                    </svg>
-                  </div>
-                  <div className="player__btn-play _btn">
-                    <svg className="player__btn-play-svg" alt="play">
+                    </S.PreviosSvg>
+                  </S.PlayerButtonPrev>
+                  <S.PlayerButtonPlay>
+                    <S.PlaySvg alt="play">
                       <use xlinkHref ="img/icon/sprite.svg#icon-play"></use>
-                    </svg>
-                  </div>
-                  <div className="player__btn-next">
-                    <svg className="player__btn-next-svg" alt="next">
+                    </S.PlaySvg>
+                  </S.PlayerButtonPlay>
+                  <S.PlayerButtonNext>
+                    <S.NextSvg alt="next">
                       <use xlinkHref ="img/icon/sprite.svg#icon-next"></use>
-                    </svg>
-                  </div>
-                  <div className="player__btn-repeat _btn-icon">
-                    <svg className="player__btn-repeat-svg" alt="repeat">
+                    </S.NextSvg>
+                  </S.PlayerButtonNext>
+                  <S.PlayerButtonRepeat>
+                    <S.RepeatSvg alt="repeat">
                       <use xlinkHref ="img/icon/sprite.svg#icon-repeat"></use>
-                    </svg>
-                  </div>
-                  <div className="player__btn-shuffle _btn-icon">
-                    <svg className="player__btn-shuffle-svg" alt="shuffle">
+                    </S.RepeatSvg>
+                  </S.PlayerButtonRepeat>
+                  <S.PlayerButtonShuffle>
+                    <S.ShuffleSvg alt="shuffle">
                       <use xlinkHref ="img/icon/sprite.svg#icon-shuffle"></use>
-                    </svg>
-                  </div>
-                </div>
+                    </S.ShuffleSvg>
+                  </S.PlayerButtonShuffle>
+                </S.PlayerControls>
 
-                <div className="player__track-play track-play">
-                  <div className="track-play__contain">
-                    <div className="track-play__image">
-                      <svg className="track-play__svg" alt="music">
+                <S.PlayerTrackPlay>
+                  <S.TrackPlayContain>
+                    <S.TrackPlayImg>
+                      <S.TrackPlaySvg alt="music">
                         <use xlinkHref ="img/icon/sprite.svg#icon-note"></use>
-                      </svg>
-                    </div>
-                    <div className="track-play__author">
-                      <a className="track-play__author-link" href="http://"
-                        >Ты та...</a
-                      >
-                    </div>
-                    <div className="track-play__album">
-                      <a className="track-play__album-link" href="http://">Баста</a>
-                    </div>
-                  </div>
+                      </S.TrackPlaySvg>
+                    </S.TrackPlayImg>
+                    <S.TrackPlayAuthor>
+                      <S.TrackPlayAuthorLink href="http://">Ты та...</S.TrackPlayAuthorLink>
+                    </S.TrackPlayAuthor>
+                    <S.TrackPlayAlbum>
+                      <S.TrackPlayAlbumLink href="http://">Баста</S.TrackPlayAlbumLink>
+                    </S.TrackPlayAlbum>
+                  </S.TrackPlayContain>
 
-                  <div className="track-play__like-dis">
-                    <div className="track-play__like _btn-icon">
-                      <svg className="track-play__like-svg" alt="like">
+                  <S.TrackPlayLikeDis>
+                    <S.TrackPlayLike>
+                      <S.TrackPlayLikeSvg alt="like">
                         <use xlinkHref ="img/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                    </div>
-                    <div className="track-play__dislike _btn-icon">
-                      <svg className="track-play__dislike-svg" alt="dislike">
-                        <use
-                          xlinkHref ="img/icon/sprite.svg#icon-dislike"
-                        ></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                      </S.TrackPlayLikeSvg>
+                    </S.TrackPlayLike>
+                    <S.TrackPlayDislike>
+                      <S.TrackPlayDislikeSvg alt="dislike">
+                        <use xlinkHref ="img/icon/sprite.svg#icon-dislike"></use>
+                      </S.TrackPlayDislikeSvg>
+                    </S.TrackPlayDislike>
+                  </S.TrackPlayLikeDis>
+                </S.PlayerTrackPlay>
+    </S.BarPlayer>
 );    
 }
 
-export default Player;
