@@ -1,7 +1,10 @@
-import './SidebarContent.css';
+import * as S from './SidebarContent.styles';
 import {useState, useEffect} from 'react';
 
-function SidebarContent() {
+
+
+
+export default function SidebarContent() {
 
   const [sceleton, setSceleton] = useState(true);
   useEffect(()=>{
@@ -13,54 +16,48 @@ function SidebarContent() {
     return ( <div>
 
 {sceleton && (
-        <div className="sidebar__block sceleton ">
-          <div className="sidebar__list">
-            <div className="sidebar__item">
-            </div>
-            <div className="sidebar__item">
-            </div>
-            <div className="sidebar__item">
-            </div>
-          </div>
-        </div>   
+        <S.SidebarBlock>
+          <S.SideBarList>
+            <S.SidebarItemSceleton>
+            </S.SidebarItemSceleton>
+            <S.SidebarItemSceleton>
+            </S.SidebarItemSceleton>
+            <S.SidebarItemSceleton>
+            </S.SidebarItemSceleton>
+          </S.SideBarList>
+        </S.SidebarBlock>   
       )}
 
       {!sceleton && (
-            <div className="sidebar__block">
-              <div className="sidebar__list">
-                <div className="sidebar__item">
-                  <a className="sidebar__link" href="#">
-                    <img
-                      className="sidebar__img"
+            <S.SidebarBlock>
+              <S.SideBarList>
+                <S.SidebarItem>
+                  <S.SidebarLink href="#">
+                    <S.SidebarImg
                       src="img/playlist01.png"
                       alt="day's playlist"
                     />
-                  </a>
-                </div>
-                <div className="sidebar__item">
-                  <a className="sidebar__link" href="#">
-                    <img
-                      className="sidebar__img"
+                  </S.SidebarLink>
+                </S.SidebarItem>
+                <S.SidebarItem>
+                  <S.SidebarLink href="#">
+                    <S.SidebarImg
                       src="img/playlist02.png"
                       alt="day's playlist"
                     />
-                  </a>
-                </div>
-                <div className="sidebar__item">
-                  <a className="sidebar__link" href="#">
-                    <img
-                      className="sidebar__img"
+                  </S.SidebarLink>
+                </S.SidebarItem>
+                <S.SidebarItem>
+                  <S.SidebarLink href="#">
+                    <S.SidebarImg
                       src="img/playlist03.png"
                       alt="day's playlist"
                     />
-                  </a>
-                </div>
-              </div>
-            </div>
+                  </S.SidebarLink>
+                </S.SidebarItem>
+              </S.SideBarList>
+            </S.SidebarBlock>
       )} 
-      
     </div>   
     );
 }
-
-export default SidebarContent;
