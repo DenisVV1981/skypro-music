@@ -55,7 +55,6 @@ display: flex;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
-
 `
 
 export const PlayerButtonPrev = styled(PlayerButton)`
