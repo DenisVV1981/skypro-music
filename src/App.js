@@ -1,5 +1,8 @@
 // import logo from './logo.svg';
-import './App.css';
+import React, { Fragment }  from 'react';
+import * as S from './App.styles';
+import * as G from './App.globalstyles';
+
 import Player from './components/Player/Player.jsx';
 import Volume from './components/Volume/Volume.jsx';
 import SidebarUserInfo from './components/SideBar/SidebarUserInfo.jsx';
@@ -12,33 +15,36 @@ import SearchContent from './components/SearchContent/SearchContent.jsx';
 
 function App() {
   return (
-    <div className="wrapper">
-      <div className="container">
-        <main className="main">
-          <MainNavigation/>
-          <div className="main__centerblock centerblock">
-              <SearchContent/>
-            <h2 className="centerblock__h2">Треки</h2>
-              <FilterPanel/>
-              <PlaylistContent/>
-          </div>
-          <div className="main__sidebar sidebar">
-              < SidebarUserInfo />
-              < SidebarContent />
-          </div>
-        </main>
-        <div className="bar">
-          <div className="bar__content">
-            <div className="bar__player-progress"></div>
-            <div className="bar__player-block">
-                <Player/>
-                <Volume/>
-            </div>
-          </div>
-        </div>
-        <footer className="footer"></footer>
-      </div>
-    </div>
+    <Fragment>
+      <G.myGlobalStyle />
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
+            <MainNavigation/>
+            <S.MainCenterblock>
+                <SearchContent/>
+              <S.CenterblockH2>Треки</S.CenterblockH2>
+                <FilterPanel/>
+                <PlaylistContent/>
+            </S.MainCenterblock>
+            <S.MainSidebar>
+                < SidebarUserInfo />
+                < SidebarContent />
+            </S.MainSidebar>
+          </S.Main>
+          <S.Bar>
+            <S.BarContent>
+              <S.BarPlayProgress></S.BarPlayProgress>
+              <S.BarPlayerBlock>
+                  <Player/>
+                  <Volume/>
+              </S.BarPlayerBlock>
+            </S.BarContent>
+          </S.Bar>
+          <S.Footer></S.Footer>
+        </S.Container>
+      </S.Wrapper>
+    </Fragment>
   );
 }
 
