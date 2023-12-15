@@ -1,27 +1,24 @@
-import './Filter.css';
+import * as S from './Filter.styles';
 import React from 'react'
 
-function Filter(props) {
+
+
+
+// вместо использования переменной props, декомпозировал его свойства на отдельные параметры
+export default function Filter({onClickCallback, filtername, visible, items}) {
     return (
+        <S.FilterButton onClick={onClickCallback}>
+            <div>{filtername}</div>
         
-            <div onClick={props.onClickCallback} className="filter__button button-author _btn-text">
-                
-                <div>{props.filtername}</div>
-            
-                {props.visible && (
-                    <div class="filter-panel">
-                        <div>
-                        <ul class="filter-list">
-                            {props.items.map((item)=>{
-                                return <li> {item} </li>
-                            })}
-                        </ul></div>
+            {visible && (
+                <S.FilterPanel>
+                    <div>
+                    <S.FilterList>
+                        {items.map( (item)=>{ return <li> {item} </li> } )}
+                    </S.FilterList>
                     </div>
-                )}
-            </div>
+                </S.FilterPanel>
+            )}
+        </S.FilterButton>
     );
 };
-
-
-
-export default Filter;

@@ -1,16 +1,16 @@
-import './SidebarUserInfo.css'
+import * as S from './SidebarUserInfo.styles';
 
-function SidebarUserInfo() {
+export default function SidebarUserInfo() {
     return (
-        <div className="sidebar__personal">
-              <p className="sidebar__personal-name">Sergey.Ivanov</p>
-              <div className="sidebar__icon">
+        <S.SidebarPersonal>
+              <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
+              <S.SidebarIcon>
                 <svg alt="logout">
                   <use xlinkHref ="img/icon/sprite.svg#logout"></use>
                 </svg>
-              </div>
-            </div>
+              </S.SidebarIcon>
+            </S.SidebarPersonal>
     );
 }
 
-export default SidebarUserInfo;
+ 

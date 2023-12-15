@@ -1,19 +1,16 @@
-import './SearchContent.css'
+import * as S from './SearchContent.styles';
 
-function SearchContent() {
+export default function SearchContent() {
 return (
-    <div className="centerblock__search search">
-    <svg className="search__svg">
+    <S.CenterblockSearch>
+    <S.SearchSvg>
       <use xlinkHref ="img/icon/sprite.svg#icon-search"></use>
-    </svg>
-    <input
-      className="search__text"
+    </S.SearchSvg>
+    <S.SearchText
       type="search"
       placeholder="Поиск"
       name="search"
     />
-  </div>
+  </S.CenterblockSearch>
 );
 }
-
-export default SearchContent;

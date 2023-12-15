@@ -1,8 +1,10 @@
-import './FilterPanel.css';
+
 import Filter from './Filter.jsx';
 import {useState} from 'react';
+import * as S from './FilterPanel.styles.js';
 
-function FilterPanel() {
+
+export default function FilterPanel() {
 
   const [visibleFilter, setVisible] = useState(null);
   const toggleVisibility = (value) => {
@@ -15,8 +17,8 @@ function FilterPanel() {
   };
 
   return (
-    <div className="centerblock__filter filter">
-    <div className="filter__title">Искать по:</div>
+    <S.CenterblockFilter>
+    <S.FilterTitle>Искать по:</S.FilterTitle>
 
     <Filter 
       onClickCallback={() => toggleVisibility("author")} 
@@ -35,9 +37,7 @@ function FilterPanel() {
       visible={visibleFilter === "genre"}
       filtername="жанру" 
       items={["Pop", "Rock", "Jazz"]}></Filter>
-  </div>
+  </S.CenterblockFilter>
 );
 
 }
-
-export default FilterPanel;
