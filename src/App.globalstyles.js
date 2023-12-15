@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 
-export const myGlobalStyle = createGlobalStyle`
+ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
@@ -33,8 +33,8 @@ export const myGlobalStyle = createGlobalStyle`
   @font-face {
   font-family: "StratosSkyeng";
   src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url("../public/fonts/StratosSkyeng.woff2") format("woff2"),
-    url("../public/fonts/StratosSkyeng.woff") format("woff");
+    url("/fonts/StratosSkyeng.woff2") format("woff2"),
+    url("/fonts/StratosSkyeng.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
@@ -89,22 +89,18 @@ button,
   cursor: pointer;
 }
 
-
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
@@ -131,3 +127,4 @@ button,
 }
 `;
 
+export default GlobalStyle;

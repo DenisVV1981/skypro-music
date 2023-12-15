@@ -1,8 +1,7 @@
 // import logo from './logo.svg';
 import React, { Fragment }  from 'react';
 import * as S from './App.styles';
-import * as G from './App.globalstyles';
-
+import GlobalStyle from './App.globalstyles.js';
 import Player from './components/Player/Player.jsx';
 import Volume from './components/Volume/Volume.jsx';
 import SidebarUserInfo from './components/SideBar/SidebarUserInfo.jsx';
@@ -16,7 +15,7 @@ import SearchContent from './components/SearchContent/SearchContent.jsx';
 function App() {
   return (
     <Fragment>
-      <G.myGlobalStyle />
+      <GlobalStyle />
       <S.Wrapper>
         <S.Container>
           <S.Main>
