@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import * as S from './ManeNavigation.styles';
 
-export default function MainNavigation() {
+export default function MainNavigation({user, onAuthButtonClick}) {
+  const isAuthorized = user !== null;
 
 const [visible, setVisible] = useState(true);
 const toggleVisibility = () => {setVisible(!visible);};
@@ -20,13 +21,13 @@ const toggleVisibility = () => {setVisible(!visible);};
                 <S.NavMenu>
                   <S.MenuList>
                     <S.MenuItem >
-                      <S.MenuLink href="#" >Главное</S.MenuLink>
+                      <S.MenuLink to="/" >Главное</S.MenuLink>
                     </S.MenuItem>
                     <S.MenuItem >
-                      <S.MenuLink href="#" >Мой плейлист</S.MenuLink>
+                      <S.MenuLink to="/favorities" >Мой плейлист</S.MenuLink>
                     </S.MenuItem>
                     <S.MenuItem >
-                      <S.MenuLink href="../signin.html" >Войти</S.MenuLink>
+                      <S.MenuLink to="/login" onClick={onAuthButtonClick}>{isAuthorized ? "Выйти" : "Войти"}</S.MenuLink>
                     </S.MenuItem>
                   </S.MenuList>
                 </S.NavMenu>

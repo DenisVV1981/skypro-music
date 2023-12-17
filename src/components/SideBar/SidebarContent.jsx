@@ -1,9 +1,6 @@
 import * as S from './SidebarContent.styles';
 import {useState, useEffect} from 'react';
 
-
-
-
 export default function SidebarContent() {
 
   const [sceleton, setSceleton] = useState(true);
@@ -32,7 +29,7 @@ export default function SidebarContent() {
             <S.SidebarBlock>
               <S.SideBarList>
                 <S.SidebarItem>
-                  <S.SidebarLink href="#">
+                  <S.SidebarLink to="/categories/1">
                     <S.SidebarImg
                       src="img/playlist01.png"
                       alt="day's playlist"
@@ -40,7 +37,7 @@ export default function SidebarContent() {
                   </S.SidebarLink>
                 </S.SidebarItem>
                 <S.SidebarItem>
-                  <S.SidebarLink href="#">
+                  <S.SidebarLink to="/categories/2">
                     <S.SidebarImg
                       src="img/playlist02.png"
                       alt="day's playlist"
@@ -48,7 +45,7 @@ export default function SidebarContent() {
                   </S.SidebarLink>
                 </S.SidebarItem>
                 <S.SidebarItem>
-                  <S.SidebarLink href="#">
+                  <S.SidebarLink to="/categories/3">
                     <S.SidebarImg
                       src="img/playlist03.png"
                       alt="day's playlist"
