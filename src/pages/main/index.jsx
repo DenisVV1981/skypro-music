@@ -12,7 +12,7 @@ import SearchContent from '../../components/SearchContent/SearchContent.jsx';
 
 
 
-export const MainPage = ({user, onAuthButtonClick})=> {
+export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTrackToPlay, sceleton})=> {
 return (
    
     <S.Wrapper>
@@ -23,22 +23,24 @@ return (
             <SearchContent/>
           <S.CenterblockH2>Треки</S.CenterblockH2>
             <FilterPanel/>
-            <PlaylistContent/>
+            <PlaylistContent sceleton={sceleton} trackList={trackList} setTrackToPlay={setTrackToPlay}/>
         </S.MainCenterblock>
         <S.MainSidebar>
             < SidebarUserInfo />
             < SidebarContent />
         </S.MainSidebar>
       </S.Main>
-      <S.Bar>
-        <S.BarContent>
-          <S.BarPlayProgress></S.BarPlayProgress>
-          <S.BarPlayerBlock>
-              <Player/>
-              <Volume/>
-          </S.BarPlayerBlock>
-        </S.BarContent>
-      </S.Bar>
+      {trackToPlay && (
+        <S.Bar>
+          <S.BarContent>
+            <S.BarPlayProgress></S.BarPlayProgress>
+            <S.BarPlayerBlock>
+                <Player trackToPlay={trackToPlay}/>
+                <Volume/>
+            </S.BarPlayerBlock>
+          </S.BarContent>
+        </S.Bar>
+        )}
       <S.Footer></S.Footer>
     </S.Container>
   </S.Wrapper>
