@@ -1,13 +1,7 @@
-// import {useState, useEffect} from 'react';
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
 
 function PlaylistContent({sceleton, trackList, setTrackToPlay}) {
-  // useEffect(()=>{
-  //   setTimeout(()=>{
-  //     setSceleton(false);
-  //   }, 5000  );
-  // });
 
   return (
     <S.CenterblockContent>
@@ -34,9 +28,13 @@ function PlaylistContent({sceleton, trackList, setTrackToPlay}) {
         </S.ContentPlayList>
       )}
       
-      {!sceleton && (
+      {!sceleton && trackList.errorMessage && (
+        <div>{trackList.errorMessage}</div>
+      )}
+
+      {!sceleton && trackList.list && (
         <S.ContentPlayList>
-          {trackList.map((song) => {
+          {trackList.list.map((song) => {
             return <S.PlaylistItem onClick={()=>{setTrackToPlay(song)}} key={song.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>

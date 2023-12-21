@@ -12,16 +12,28 @@ function App() {
   const [sceleton, setSceleton] = useState(true);
 
   useEffect(() => {
-    getTrackList().then((tracks) => {
-      setTrackList(tracks);
-      setSceleton(false);
-    });
-  }, []);
+    const fetchData = async () => {
 
-//  function mysetTrackToPlay(track) {
-// console.log(track);
-// setTrackToPlay(track);
-//  };
+      try {
+        const tracks = await getTrackList();
+        setTrackList({
+          list: tracks
+        });
+        setSceleton(false);
+      } catch (error) {
+        console.log(error);
+        setSceleton(false);
+        setTrackList({
+          errorMessage: "Не удалось загрузить плейлист, попробуйте позже."
+        });
+      }
+      
+    }
+  
+    fetchData()
+  }, [])
+
+
 
   return (
     <Fragment>
