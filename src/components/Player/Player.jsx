@@ -5,6 +5,7 @@ import React from 'react';
 export default function Player({trackToPlay}) {
 return (
     <S.BarPlayer>
+      <audio controls src={trackToPlay.track_file}></audio>
                 <S.PlayerControls>
                   <S.PlayerButtonPrev>
                     <S.PreviosSvg alt="prev">

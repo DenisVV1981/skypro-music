@@ -46,16 +46,16 @@ function PlaylistContent({sceleton, trackList, setTrackToPlay}) {
                     </S.trackTitleSvg>
                   </S.TrackTitleImage>
                   <S.TrackTitleText>
-                    <S.TrackTitleLink href="http://">{song.name}
+                    <S.TrackTitleLink>{song.name}
                       <S.TrackTitleSpan>{song.title2}</S.TrackTitleSpan>
                     </S.TrackTitleLink>
                   </S.TrackTitleText>
                 </S.TrackTitle>
                 <S.TrackAuthor>
-                  <S.TrackAuthorLink href="http://">{song.author}</S.TrackAuthorLink>
+                  <S.TrackAuthorLink>{song.author}</S.TrackAuthorLink>
                 </S.TrackAuthor>
                 <S.TrackAlbum>
-                  <S.TrackAlbumLink href="http://">{song.album}</S.TrackAlbumLink>
+                  <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
                 </S.TrackAlbum>
                 <div>
                   <S.TrackTimeSvg alt="time">
