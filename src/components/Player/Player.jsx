@@ -2,9 +2,10 @@ import * as S from './Player.styles';
 import React from 'react';
 
 
-export default function Player() {
+export default function Player({trackToPlay}) {
 return (
     <S.BarPlayer>
+      <audio controls src={trackToPlay.track_file}></audio>
                 <S.PlayerControls>
                   <S.PlayerButtonPrev>
                     <S.PreviosSvg alt="prev">
@@ -41,10 +42,10 @@ return (
                       </S.TrackPlaySvg>
                     </S.TrackPlayImg>
                     <S.TrackPlayAuthor>
-                      <S.TrackPlayAuthorLink href="http://">Ты та...</S.TrackPlayAuthorLink>
+                      <S.TrackPlayAuthorLink href="http://">{trackToPlay.name}</S.TrackPlayAuthorLink>
                     </S.TrackPlayAuthor>
                     <S.TrackPlayAlbum>
-                      <S.TrackPlayAlbumLink href="http://">Баста</S.TrackPlayAlbumLink>
+                      <S.TrackPlayAlbumLink href="http://">{trackToPlay.author}</S.TrackPlayAlbumLink>
                     </S.TrackPlayAlbum>
                   </S.TrackPlayContain>
 

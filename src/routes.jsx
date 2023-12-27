@@ -8,7 +8,7 @@ import { NotFound } from './pages/404';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useState } from 'react';
 
-export const AppRoutes = () => {
+export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) => {
     const [user, setUser] = useState( window.localStorage.getItem("user"));
     const navigate = useNavigate();
     const handleLogin = () => {
@@ -26,7 +26,7 @@ export const AppRoutes = () => {
     return (
         <Routes>
             <Route element= {<ProtectedRoute isAllowed={Boolean(isAuthorized)} redirectPath="/login"/>}>
-                <Route path="/" element= {<MainPage user={user} onAuthButtonClick={isAuthorized ? handleLogout : handleLogin}/>}/>
+                <Route path="/" element= {<MainPage sceleton={sceleton} trackList={trackList} trackToPlay={trackToPlay} setTrackToPlay={setTrackToPlay} user={user} onAuthButtonClick={isAuthorized ? handleLogout : handleLogin}/>}/>
                 <Route path="/categories/:id" element= {<Categories/>}/>
                 <Route path="/favorities" element= {<Favorities/>}/>
             </Route>

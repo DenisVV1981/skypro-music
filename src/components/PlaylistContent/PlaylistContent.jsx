@@ -1,62 +1,7 @@
-import {useState, useEffect} from 'react';
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
 
-function PlaylistContent() {
-  const [sceleton, setSceleton] = useState(true);
-  useEffect(()=>{
-    setTimeout(()=>{
-      setSceleton(false);
-    }, 5000  );
-  });
-
- const playList = [
-  {
-    "id":1,
-    "title":"Guilt",
-    "author": "Nero",
-    "album": "Welcome Reality",
-    "time":"4:44"
-  },
-  {
-    "id":2,
-    "title":"Elektro",
-    "author": "Dynoro, Outwork, Mr. Gee",
-    "album": "Elektro",
-    "time":"2:22"
-  },
-  {
-    "id":3,
-    "title":"I’m Fire",
-    "author": "Ali Bakgor",
-    "album": "I’m Fire",
-    "time":"5:20"
-  }, 
-  {
-    "id":4,
-    "title":"Non Stop",
-    "title2": "(Remix)",
-    "author": "Стоункат, Psychopath",
-    "album": "Non Stop",
-    "time":"4:15"
-  },
-  {
-    "id":5,
-    "title":"Run Run",
-    "title2": "(feat. AR/CO)",
-    "author": "Jaded, Will Clarke, AR/CO",
-    "album": "Run Run",
-    "time":"2:54"
-  },
-  {
-    "id":6,
-    "title":"Eyes on Fire",
-    "title2": "(Zeds Dead Remix)",
-    "author": "Blue Foundation, Zeds Dead",
-    "album": "Eyes on Fire",
-    "time":"5:20"
-  },
- ];
+function PlaylistContent({sceleton, trackList, setTrackToPlay}) {
 
   return (
     <S.CenterblockContent>
@@ -83,10 +28,14 @@ function PlaylistContent() {
         </S.ContentPlayList>
       )}
       
-      {!sceleton && (
+      {!sceleton && trackList.errorMessage && (
+        <div>{trackList.errorMessage}</div>
+      )}
+
+      {!sceleton && trackList.list && (
         <S.ContentPlayList>
-          {playList.map((song) => {
-            return <S.PlaylistItem key={song.id}>
+          {trackList.list.map((song) => {
+            return <S.PlaylistItem onClick={()=>{setTrackToPlay(song)}} key={song.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>
                   <S.TrackTitleImage>
@@ -95,15 +44,16 @@ function PlaylistContent() {
                     </S.trackTitleSvg>
                   </S.TrackTitleImage>
                   <S.TrackTitleText>
-                    <S.TrackTitleLink href="http://">{song.title}
-                      <S.TrackTitleSpan>{song.title2}</S.TrackTitleSpan></S.TrackTitleLink>
+                    <S.TrackTitleLink>{song.name}
+                      <S.TrackTitleSpan>{song.title2}</S.TrackTitleSpan>
+                    </S.TrackTitleLink>
                   </S.TrackTitleText>
                 </S.TrackTitle>
                 <S.TrackAuthor>
-                  <S.TrackAuthorLink href="http://">{song.author}</S.TrackAuthorLink>
+                  <S.TrackAuthorLink>{song.author}</S.TrackAuthorLink>
                 </S.TrackAuthor>
                 <S.TrackAlbum>
-                  <S.TrackAlbumLink href="http://">{song.album}</S.TrackAlbumLink>
+                  <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
                 </S.TrackAlbum>
                 <div>
                   <S.TrackTimeSvg alt="time">
