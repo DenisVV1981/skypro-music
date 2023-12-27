@@ -3,35 +3,10 @@ import * as S from './Player.styles';
 import React from 'react';
 
 
-export default function Player({trackToPlay}) {
- const [isPlaying, setIsPlaying] = useState(false);
- const audioRef = useRef(null);
-
- const handleStart = ()=>{
-  audioRef.current.play();
-  setIsPlaying(true);
- };
-
- const handleStop = () => {
-  audioRef.current.pause();
-  setIsPlaying(false);
- };
-
- const togglePlay = isPlaying ? handleStop : handleStart;
-
- const [isLooping, setIsLooping] = useState(false);
- 
- const toggleLoop = () => {
-  audioRef.current.loop = isLooping;
-  setIsLooping(!isLooping);
-  console.log(isLooping);
- };
+export default function Player({trackToPlay, togglePlay, isPlaying, toggleLoop, isLooping}) {
 
 return (
     <S.BarPlayer>
-      <audio controls ref ={audioRef}>
-        <source src={trackToPlay.track_file} type='audio/mp3'/>
-      </audio>
                 <S.PlayerControls>
                   <S.PlayerButtonPrev>
                     <S.PreviosSvg alt="prev">
