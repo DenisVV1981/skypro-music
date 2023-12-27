@@ -11,8 +11,6 @@ import FilterPanel from '../../components/FilterContent/FilterPanel.jsx';
 import SearchContent from '../../components/SearchContent/SearchContent.jsx';
 import { useState, useRef } from 'react';
 
-
-
 export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTrackToPlay, sceleton})=> {
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -35,7 +33,6 @@ export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTr
   const toggleLoop = () => {
    audioRef.current.loop = isLooping;
    setIsLooping(!isLooping);
-   console.log(isLooping);
   };
 
 return (
@@ -60,10 +57,10 @@ return (
           <S.BarContent>
             <S.BarPlayProgress></S.BarPlayProgress>
             <S.BarPlayerBlock>
-                <audio controls ref ={audioRef}>
-                  <source src={trackToPlay.track_file} type='audio/mp3'/>
+                <audio controls ref={audioRef}>
+                  <source src={trackToPlay.track_file} type='audio/mpeg'/>
                 </audio>
-                <Player trackToPlay={trackToPlay} togglePlay={togglePlay} isPlaying={isPlaying} toggleLoop={toggleLoop} isLooping={isLooping}/>
+                <Player trackToPlay={trackToPlay} audioRef={audioRef} togglePlay={togglePlay} isPlaying={isPlaying} handleStart={handleStart} toggleLoop={toggleLoop} isLooping={isLooping}/>
                 <Volume audioRef={audioRef}/>
             </S.BarPlayerBlock>
           </S.BarContent>

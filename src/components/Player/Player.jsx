@@ -1,9 +1,17 @@
-import { useState, useRef } from 'react';
+import {  useEffect } from 'react';
 import * as S from './Player.styles';
 import React from 'react';
 
 
-export default function Player({trackToPlay, togglePlay, isPlaying, toggleLoop, isLooping}) {
+export default function Player({audioRef, trackToPlay,handleStart,  togglePlay, isPlaying, toggleLoop, isLooping}) {
+
+  
+  useEffect(() => {
+    audioRef.current.load();
+    audioRef.current.addEventListener("loadedmetadata", () => {
+      handleStart();
+    });
+  }, [trackToPlay]);
 
 return (
     <S.BarPlayer>
