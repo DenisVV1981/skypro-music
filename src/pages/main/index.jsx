@@ -9,6 +9,7 @@ import PlaylistContent from '../../components/PlaylistContent/PlaylistContent.js
 import MainNavigation from '../../components/Navigation/MainNavigation.jsx';
 import FilterPanel from '../../components/FilterContent/FilterPanel.jsx';
 import SearchContent from '../../components/SearchContent/SearchContent.jsx';
+import ProgressBar from '../../components/ProgressPlayerBar/ProgressPlayerBar.jsx';
 import { useState, useRef } from 'react';
 
 export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTrackToPlay, sceleton})=> {
@@ -34,6 +35,12 @@ export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTr
    audioRef.current.loop = isLooping;
    setIsLooping(!isLooping);
   };
+  
+  const [currentTime, setCurrentTime] = useState(0);
+
+const changeCurrentTime = (newTime) => {
+audioRef.current.currentTime = newTime;
+};
 
 return (
    
@@ -56,8 +63,9 @@ return (
         <S.Bar>
           <S.BarContent>
             <S.BarPlayProgress></S.BarPlayProgress>
+                <ProgressBar trackToPlay={trackToPlay} audioRef={audioRef} currentTime={currentTime} changeCurrentTime={changeCurrentTime}/>
             <S.BarPlayerBlock>
-                <audio controls ref={audioRef}>
+                <audio controls ref={audioRef} onTimeUpdate={(event) => setCurrentTime(event.target.currentTime)}>
                   <source src={trackToPlay.track_file} type='audio/mpeg'/>
                 </audio>
                 <Player trackToPlay={trackToPlay} audioRef={audioRef} togglePlay={togglePlay} isPlaying={isPlaying} handleStart={handleStart} toggleLoop={toggleLoop} isLooping={isLooping}/>
