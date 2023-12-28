@@ -26,7 +26,17 @@ export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTr
    audioRef.current.pause();
    setIsPlaying(false);
   };
- 
+
+  const handlePrev = () => {
+    alert('Еще не реализовано');
+  };
+  const handleNext = () => {
+    alert('Еще не реализовано');
+  };
+  const handleShuffle = () => {
+    alert('Еще не реализовано');
+  };
+
   const togglePlay = isPlaying ? handleStop : handleStart;
  
   const [isLooping, setIsLooping] = useState(false);
@@ -47,9 +57,9 @@ export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTr
   const currentTimeChanged = (event)=>{
     setCurrentTime(event.target.currentTime);
 let sec =  Math.floor(event?.target?.currentTime ?? 0);
-    setFormattedCurrentTime(Math.floor(sec / 60) + ':' + sec % 60 + ' / ');
+    setFormattedCurrentTime(Math.floor(sec / 60).toString().padStart(2, '0') + ':' + (sec % 60).toString().padStart(2, '0')  + ' / ');
 sec = Math.floor(event?.target?.duration ?? 0);
-    setFormatttedDuration(Math.floor(sec / 60) + ':' + sec % 60);
+    setFormatttedDuration(Math.floor(sec / 60).toString().padStart(2, '0')  + ':' + (sec % 60).toString().padStart(2, '0') );
   }; 
 
 return (
@@ -77,10 +87,21 @@ return (
             </S.BarPlayProgressTimer>
             <ProgressBar audioRef={audioRef} currentTime={currentTime} changeCurrentTime={changeCurrentTime}/>
             <S.BarPlayerBlock>
-                <audio controls ref={audioRef} onTimeUpdate={(event) => currentTimeChanged(event)}>
+                <audio  ref={audioRef} onTimeUpdate={(event) => currentTimeChanged(event)}>
                   <source src={trackToPlay.track_file} type='audio/mpeg'/>
                 </audio>
-                <Player trackToPlay={trackToPlay} audioRef={audioRef} togglePlay={togglePlay} isPlaying={isPlaying} handleStart={handleStart} toggleLoop={toggleLoop} isLooping={isLooping}/>
+                <Player 
+                  trackToPlay={trackToPlay}
+                  audioRef={audioRef}
+                  togglePlay={togglePlay}
+                  isPlaying={isPlaying}
+                  handleStart={handleStart}
+                  toggleLoop={toggleLoop}
+                  isLooping={isLooping}
+                  handlePrev={handlePrev}
+                  handleNext={handleNext}
+                  handleShuffle={handleShuffle}
+                />
                 <Volume audioRef={audioRef}/>
             </S.BarPlayerBlock>
           </S.BarContent>

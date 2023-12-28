@@ -3,7 +3,7 @@ import * as S from './Player.styles';
 import React from 'react';
 
 
-export default function Player({audioRef, trackToPlay,handleStart,  togglePlay, isPlaying, toggleLoop, isLooping}) {
+export default function Player({audioRef, handlePrev,handleNext,handleShuffle, trackToPlay, handleStart, togglePlay, isPlaying, toggleLoop, isLooping}) {
 
   
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Player({audioRef, trackToPlay,handleStart,  togglePlay, 
 return (
     <S.BarPlayer>
                 <S.PlayerControls>
-                  <S.PlayerButtonPrev>
+                  <S.PlayerButtonPrev onClick={handlePrev}>
                     <S.PreviosSvg alt="prev">
                       <use xlinkHref ="img/icon/sprite.svg#icon-prev"></use>
                     </S.PreviosSvg>
@@ -26,7 +26,7 @@ return (
                       <use xlinkHref ={isPlaying ? "img/icon/sprite.svg#icon-pause":"img/icon/sprite.svg#icon-play"}></use>
                     </S.PlaySvg>
                   </S.PlayerButtonPlay>
-                  <S.PlayerButtonNext>
+                  <S.PlayerButtonNext onClick={handleNext}>
                     <S.NextSvg alt="next">
                       <use xlinkHref ="img/icon/sprite.svg#icon-next"></use>
                     </S.NextSvg>
@@ -36,7 +36,7 @@ return (
                       <use xlinkHref ={isLooping ? "img/icon/sprite.svg#icon-repeat-active" : "img/icon/sprite.svg#icon-repeat"}></use>
                     </S.RepeatSvg>
                   </S.PlayerButtonRepeat>
-                  <S.PlayerButtonShuffle>
+                  <S.PlayerButtonShuffle onClick={handleShuffle}>
                     <S.ShuffleSvg alt="shuffle">
                       <use xlinkHref ="img/icon/sprite.svg#icon-shuffle"></use>
                     </S.ShuffleSvg>
