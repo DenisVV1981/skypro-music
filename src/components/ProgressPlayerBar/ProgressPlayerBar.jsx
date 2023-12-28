@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
 import * as S from './ProgressPlayerBar.styles'
 
-export default function ProgressBar({audioRef, trackToPlay, currentTime, changeCurrentTime}) {
+export default function ProgressBar({audioRef, currentTime, changeCurrentTime}) {
 
     return ( audioRef.current &&
       <S.ProgressInput

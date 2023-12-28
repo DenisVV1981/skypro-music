@@ -37,10 +37,20 @@ export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTr
   };
   
   const [currentTime, setCurrentTime] = useState(0);
+  const [formattedCurrentTime, setFormattedCurrentTime] = useState("");
+  const [formatttedDuration, setFormatttedDuration] = useState("");
 
-const changeCurrentTime = (newTime) => {
-audioRef.current.currentTime = newTime;
-};
+  const changeCurrentTime = (newTime) => {
+  audioRef.current.currentTime = newTime;
+  };
+
+  const currentTimeChanged = (event)=>{
+    setCurrentTime(event.target.currentTime);
+let sec =  Math.floor(event?.target?.currentTime ?? 0);
+    setFormattedCurrentTime(Math.floor(sec / 60) + ':' + sec % 60 + ' / ');
+sec = Math.floor(event?.target?.duration ?? 0);
+    setFormatttedDuration(Math.floor(sec / 60) + ':' + sec % 60);
+  }; 
 
 return (
    
@@ -62,10 +72,12 @@ return (
       {trackToPlay && (
         <S.Bar>
           <S.BarContent>
-            <S.BarPlayProgress></S.BarPlayProgress>
-                <ProgressBar trackToPlay={trackToPlay} audioRef={audioRef} currentTime={currentTime} changeCurrentTime={changeCurrentTime}/>
+            <S.BarPlayProgressTimer>
+              {formattedCurrentTime}{formatttedDuration}
+            </S.BarPlayProgressTimer>
+            <ProgressBar audioRef={audioRef} currentTime={currentTime} changeCurrentTime={changeCurrentTime}/>
             <S.BarPlayerBlock>
-                <audio controls ref={audioRef} onTimeUpdate={(event) => setCurrentTime(event.target.currentTime)}>
+                <audio controls ref={audioRef} onTimeUpdate={(event) => currentTimeChanged(event)}>
                   <source src={trackToPlay.track_file} type='audio/mpeg'/>
                 </audio>
                 <Player trackToPlay={trackToPlay} audioRef={audioRef} togglePlay={togglePlay} isPlaying={isPlaying} handleStart={handleStart} toggleLoop={toggleLoop} isLooping={isLooping}/>
