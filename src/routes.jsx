@@ -21,7 +21,6 @@ export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) 
         setUser(null);
     };
     const isAuthorized = user !== null;
-    console.log(isAuthorized);
 
     return (
         <Routes>

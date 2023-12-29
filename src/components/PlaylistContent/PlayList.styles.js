@@ -53,6 +53,7 @@ display: flex;
 -ms-flex-direction: column;
 flex-direction: column;
 overflow-y: auto;
+height: 450px;
 `
 export const PlaylistItem = styled.div`
 width: 100%;
