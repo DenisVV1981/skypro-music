@@ -42,7 +42,7 @@ export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTr
   const [isLooping, setIsLooping] = useState(false);
   
   const toggleLoop = () => {
-   audioRef.current.loop = isLooping;
+   audioRef.current.loop = !isLooping;
    setIsLooping(!isLooping);
   };
   

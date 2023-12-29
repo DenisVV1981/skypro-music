@@ -6,11 +6,18 @@ import React from 'react';
 export default function Player({audioRef, handlePrev,handleNext,handleShuffle, trackToPlay, handleStart, togglePlay, isPlaying, toggleLoop, isLooping}) {
 
   
+  const loadedHandleStart = () => {
+    handleStart();
+  };
+
   useEffect(() => {
     audioRef.current.load();
-    audioRef.current.addEventListener("loadedmetadata", () => {
-      handleStart();
-    });
+    audioRef.current.addEventListener("loadedmetadata", loadedHandleStart);
+
+    return () => {
+      audioRef.current.removeEventListener("loadedmetadata", loadedHandleStart);
+    }
+
   }, [trackToPlay]);
 
 return (
