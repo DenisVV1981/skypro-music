@@ -1,33 +1,49 @@
+import {  useEffect } from 'react';
 import * as S from './Player.styles';
 import React from 'react';
 
 
-export default function Player({trackToPlay}) {
+export default function Player({audioRef, handlePrev,handleNext,handleShuffle, trackToPlay, handleStart, togglePlay, isPlaying, toggleLoop, isLooping}) {
+
+  
+  const loadedHandleStart = () => {
+    handleStart();
+  };
+
+  useEffect(() => {
+    audioRef.current.load();
+    audioRef.current.addEventListener("loadedmetadata", loadedHandleStart);
+
+    return () => {
+      audioRef.current.removeEventListener("loadedmetadata", loadedHandleStart);
+    }
+
+  }, [trackToPlay]);
+
 return (
     <S.BarPlayer>
-      <audio controls src={trackToPlay.track_file}></audio>
                 <S.PlayerControls>
-                  <S.PlayerButtonPrev>
+                  <S.PlayerButtonPrev onClick={handlePrev}>
                     <S.PreviosSvg alt="prev">
                       <use xlinkHref ="img/icon/sprite.svg#icon-prev"></use>
                     </S.PreviosSvg>
                   </S.PlayerButtonPrev>
-                  <S.PlayerButtonPlay>
+                  <S.PlayerButtonPlay onClick={togglePlay}>
                     <S.PlaySvg alt="play">
-                      <use xlinkHref ="img/icon/sprite.svg#icon-play"></use>
+                      <use xlinkHref ={isPlaying ? "img/icon/sprite.svg#icon-pause":"img/icon/sprite.svg#icon-play"}></use>
                     </S.PlaySvg>
                   </S.PlayerButtonPlay>
-                  <S.PlayerButtonNext>
+                  <S.PlayerButtonNext onClick={handleNext}>
                     <S.NextSvg alt="next">
                       <use xlinkHref ="img/icon/sprite.svg#icon-next"></use>
                     </S.NextSvg>
                   </S.PlayerButtonNext>
-                  <S.PlayerButtonRepeat>
+                  <S.PlayerButtonRepeat onClick={toggleLoop}>
                     <S.RepeatSvg alt="repeat">
-                      <use xlinkHref ="img/icon/sprite.svg#icon-repeat"></use>
+                      <use xlinkHref ={isLooping ? "img/icon/sprite.svg#icon-repeat-active" : "img/icon/sprite.svg#icon-repeat"}></use>
                     </S.RepeatSvg>
                   </S.PlayerButtonRepeat>
-                  <S.PlayerButtonShuffle>
+                  <S.PlayerButtonShuffle onClick={handleShuffle}>
                     <S.ShuffleSvg alt="shuffle">
                       <use xlinkHref ="img/icon/sprite.svg#icon-shuffle"></use>
                     </S.ShuffleSvg>

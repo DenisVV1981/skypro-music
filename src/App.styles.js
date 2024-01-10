@@ -68,6 +68,19 @@ display: flex;
 flex-direction: column;
 }
 `
+export const BarPlayProgressTimer = styled.div`
+color: #696969;
+text-align: right;
+font-variant-numeric: lining-nums proportional-nums;
+
+/* Desk • 1366/Caption S */
+font-family: StratosSkyeng;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px; /* 112.5% */
+letter-spacing: 0.016px;
+`
 export const BarPlayProgress = styled.div`
 width: 100%;
 height: 5px;
