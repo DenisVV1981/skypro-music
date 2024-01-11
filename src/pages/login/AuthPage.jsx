@@ -1,8 +1,8 @@
 import * as S from './AuthPage.styles';
 import { useEffect, useState } from "react";
-import {newUserRegistration} from '../../api.js';
+import {newUserRegistration, loginUser, getToken} from '../../api.js';
 
-export const AuthPage = ({ isLoginMode = false , redirectToRegister}) => {
+export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCallback}) => {
   const [error, setError] = useState(null);
 
   const [email, setEmail] = useState("");
@@ -10,56 +10,102 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister}) => {
   const [repeatPassword, setRepeatPassword] = useState("");
 
   const handleLogin = async ({ email, password }) => {
-    alert(`Выполняется вход: ${email} ${password}`);
-    setError("Неизвестная ошибка входа");
+    
+    if(!email || !password) {
+      setError("Заполните все поля");
+      return;
+    } 
+
+    loginUser({
+      email,
+      password,
+      callbackForResponse: (data) =>{
+
+        if (data.error) {
+          if (data.error.username){
+            setError(data.error.username);
+            return;
+          }
+          if (data.error.email){
+            setError(data.error.email);
+            return;
+          }
+          if (data.error.password){
+            setError(data.error.password);
+            return;
+          }
+        }
+        if (data.errorMessage) {
+            setError(data.errorMessage);
+            return;
+        }
+
+        getToken({
+          email,
+          password
+        })
+        .then((tokens) => {
+          console.log(tokens);
+          setTokensCallback(data.data, tokens);
+        });
+
+      }
+    });
+
   };
 
   const handleRegister = async () => {
-
-  //TODO ДОБАВИЛИТЬ ВАЛИДАЦИЮ введенных пользовательских данных, прежде чем вызывать серверный API
-  
-  if(!email || !password || !repeatPassword) {
-    setError("Заполните все поля");
-    return;
-  }
-   
-  if (password !== repeatPassword) {
-    setError("Пароли не совпадают");
+    
+    if(!email || !password || !repeatPassword) {
+      setError("Заполните все поля");
       return;
-  }
-      
-  newUserRegistration({
-    email,
-    password,
-    username: email,
-    callbackForResponse: (data) => {
-      if (data.error) {
-        
-        if (data.error.username){
-          setError(data.error.username);
-          return;
+    } 
+    if (password !== repeatPassword) {
+      setError("Пароли не совпадают");
+        return;
+    }   
+
+    newUserRegistration({
+      email,
+      password,
+      username: email,
+      callbackForResponse: (data) => {
+
+        if (data.error) {
+          if (data.error.username){
+            setError(data.error.username);
+            return;
+          }
+          if (data.error.email){
+            setError(data.error.email);
+            return;
+          }
+          if (data.error.password){
+            setError(data.error.password);
+            return;
+          }
         }
-        if (data.error.email){
-          setError(data.error.email);
-          return;
+        if (data.errorMessage) {
+            setError(data.errorMessage);
+            return;
         }
-        if (data.error.password){
-          setError(data.error.password);
-          return;
-        }
-      }
-      if (data.errorMessage) {
-      ////.
+
+        getToken({
+          email,
+          password
+        })
+        .then((tokens) => {
+          console.log(tokens);
+          setTokensCallback(data.data, tokens);
+        });
 
       }
-      if (data.data) {
-      ////.
 
-      }
-    }
-  })
-  .then((json) => console.log(json));
+    });
+
   };
+
+
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
   useEffect(() => {

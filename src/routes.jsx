@@ -7,6 +7,7 @@ import { AuthPage } from './pages/login/AuthPage';
 import { NotFound } from './pages/404';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useState } from 'react';
+import { classNamesFunction } from '@fluentui/react';
 
 export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) => {
     const [user, setUser] = useState( window.localStorage.getItem("user"));
@@ -27,6 +28,17 @@ export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) 
         window.localStorage.removeItem("user");
         setUser(null);
     };
+
+    const handleSetTokens = (userData, newTokens)=>{
+        console.log(userData);
+        console.log(newTokens);
+
+        
+        window.localStorage.setItem("user",userData);
+        setUser( window.localStorage.getItem("user"));
+
+        navigate("/", {replace: true}); 
+    };
     const isAuthorized = user !== null;
  
     return (
@@ -36,8 +48,8 @@ export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) 
                 <Route path="/categories/:id" element= {<Categories/>}/>
                 <Route path="/favorities" element= {<Favorities/>}/>
             </Route>
-            <Route path="/login" element= {<AuthPage isLoginMode={true} redirectToRegister={handleRedirectToRegister}/>}/>
-            <Route path="/registration" element={<AuthPage isLoginMode={false} redirectToRegister={handleRedirectToLogin}/>}/>
+            <Route path="/login" element= {<AuthPage isLoginMode={true} redirectToRegister={handleRedirectToRegister} setTokensCallback={handleSetTokens}/>}/>
+            <Route path="/registration" element={<AuthPage isLoginMode={false} redirectToRegister={handleRedirectToLogin} setTokensCallback={handleSetTokens}/>}/>
             <Route path="*" element= {<NotFound/>}/>
         </Routes>
     );
