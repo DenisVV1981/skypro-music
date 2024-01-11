@@ -1,5 +1,6 @@
 import * as S from './AuthPage.styles';
 import { useEffect, useState } from "react";
+import {newUserRegistration} from '../../api.js';
 
 export const AuthPage = ({ isLoginMode = false , redirectToRegister}) => {
   const [error, setError] = useState(null);
@@ -14,8 +15,50 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister}) => {
   };
 
   const handleRegister = async () => {
-    alert(`Выполняется регистрация: ${email} ${password}`);
-    setError("Неизвестная ошибка регистрации");
+
+  //TODO ДОБАВИЛИТЬ ВАЛИДАЦИЮ введенных пользовательских данных, прежде чем вызывать серверный API
+  
+  if(!email || !password || !repeatPassword) {
+    setError("Заполните все поля");
+    return;
+  }
+   
+  if (password !== repeatPassword) {
+    setError("Пароли не совпадают");
+      return;
+  }
+      
+  newUserRegistration({
+    email,
+    password,
+    username: email,
+    callbackForResponse: (data) => {
+      if (data.error) {
+        
+        if (data.error.username){
+          setError(data.error.username);
+          return;
+        }
+        if (data.error.email){
+          setError(data.error.email);
+          return;
+        }
+        if (data.error.password){
+          setError(data.error.password);
+          return;
+        }
+      }
+      if (data.errorMessage) {
+      ////.
+
+      }
+      if (data.data) {
+      ////.
+
+      }
+    }
+  })
+  .then((json) => console.log(json));
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
