@@ -7,7 +7,7 @@ import { NotFound } from './pages/404';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useState } from 'react';
 
-export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton, logout }) => {
+export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) => {
     const [user, setUser] = useState( window.localStorage.getItem("user"));
     const navigate = useNavigate();
  
@@ -17,9 +17,7 @@ export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton, lo
     const handleRedirectToLogin = () => {
         navigate("/login", {replace: true}); 
      };
-    const handleNavigateToLogin = () => {
-        navigate("/", {replace: true}); 
-    }
+ 
     const handleLogout = () => {
         window.localStorage.removeItem("user");
         setUser(null);

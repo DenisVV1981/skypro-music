@@ -1,9 +1,8 @@
 import {useState} from 'react';
 import * as S from './ManeNavigation.styles';
 
-export default function MainNavigation({user, logout}) {
-  const isAuthorized = user !== null;
-
+export default function MainNavigation({ logout }) {
+ 
 const [visible, setVisible] = useState(true);
 const toggleVisibility = () => {setVisible(!visible);};
 
