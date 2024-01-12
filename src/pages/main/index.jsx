@@ -12,7 +12,7 @@ import SearchContent from '../../components/SearchContent/SearchContent.jsx';
 import ProgressBar from '../../components/ProgressPlayerBar/ProgressPlayerBar.jsx';
 import { useState, useRef } from 'react';
 
-export const MainPage = ({user, onAuthButtonClick, trackList, trackToPlay, setTrackToPlay, sceleton})=> {
+export const MainPage = ({user, trackList, trackToPlay, setTrackToPlay, sceleton, logout})=> {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
@@ -67,7 +67,7 @@ return (
     <S.Wrapper>
     <S.Container>
       <S.Main>
-        <MainNavigation user={user} onAuthButtonClick={onAuthButtonClick}/>
+        <MainNavigation user={user} logout={logout}/>
         <S.MainCenterblock>
             <SearchContent/>
           <S.CenterblockH2>Треки</S.CenterblockH2>
@@ -75,7 +75,7 @@ return (
             <PlaylistContent sceleton={sceleton} trackList={trackList} setTrackToPlay={setTrackToPlay}/>
         </S.MainCenterblock>
         <S.MainSidebar>
-            < SidebarUserInfo />
+            < SidebarUserInfo user={user} logout={logout}/>
             < SidebarContent />
         </S.MainSidebar>
       </S.Main>

@@ -8,6 +8,7 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleLogin = async ({ email, password }) => {
     
@@ -16,10 +17,12 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
       return;
     } 
 
+    setIsProcessing(true);
     loginUser({
       email,
       password,
       callbackForResponse: (data) =>{
+        setIsProcessing(false);
 
         if (data.error) {
           if (data.error.username){
@@ -64,13 +67,15 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
       setError("Пароли не совпадают");
         return;
     }   
-
+    setIsProcessing(true);
     newUserRegistration({
       email,
       password,
-      username: email,
+      username: email,  
       callbackForResponse: (data) => {
-
+        
+        setIsProcessing(false);
+        
         if (data.error) {
           if (data.error.username){
             setError(data.error.username);
@@ -144,7 +149,7 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
+              <S.PrimaryButton onClick={() => handleLogin({ email, password })} disabled={isProcessing}>
                 Войти
               </S.PrimaryButton>
               {/* <Link to="/register"> */}
@@ -185,11 +190,13 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={handleRegister}>
+              <S.PrimaryButton onClick={handleRegister} disabled={isProcessing}>
                 Зарегистрироваться
               </S.PrimaryButton>
               {/* <Link to="/register"> */}
-                <S.SecondaryButton onClick={redirectToRegister}>Войти</S.SecondaryButton>
+                <S.SecondaryButton onClick={redirectToRegister} disabled={isProcessing}>
+                  Войти
+                </S.SecondaryButton>
               {/* </Link> */}
             </S.Buttons>
           </>
