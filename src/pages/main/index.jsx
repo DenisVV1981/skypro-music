@@ -11,9 +11,9 @@ import FilterPanel from '../../components/FilterContent/FilterPanel.jsx';
 import SearchContent from '../../components/SearchContent/SearchContent.jsx';
 import ProgressBar from '../../components/ProgressPlayerBar/ProgressPlayerBar.jsx';
 import { useState, useRef } from 'react';
-import { UserContext } from '../../components/Context/Context.jsx';
 
-export const MainPage = ({user, trackList, trackToPlay, setTrackToPlay, sceleton, logout})=> {
+
+export const MainPage = ({trackList, trackToPlay, setTrackToPlay, sceleton, logout})=> {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
@@ -66,7 +66,7 @@ sec = Math.floor(event?.target?.duration ?? 0);
 return (
    
     <S.Wrapper>
-      <UserContext.Provider value={user}>
+     
     <S.Container>
       <S.Main>
         <MainNavigation  logout={logout}/>
@@ -111,7 +111,6 @@ return (
         )}
       <S.Footer></S.Footer>
     </S.Container>
-    </UserContext.Provider>
   </S.Wrapper>
 );
 };

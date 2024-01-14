@@ -103,14 +103,9 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
           console.log(tokens);
           setTokensCallback(data.data, tokens);
         });
-
       }
-
     });
-
   };
-
-
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
   useEffect(() => {
@@ -120,11 +115,9 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
   return (
     <S.PageContainer>
       <S.ModalForm>
-        {/* <Link to="/login"> */}
           <S.ModalLogo>
             <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
           </S.ModalLogo>
-        {/* </Link> */}
         {isLoginMode ? (
           <>
             <S.Inputs>
@@ -152,9 +145,7 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
               <S.PrimaryButton onClick={() => handleLogin({ email, password })} disabled={isProcessing}>
                 Войти
               </S.PrimaryButton>
-              {/* <Link to="/register"> */}
                 <S.SecondaryButton onClick={redirectToRegister}>Зарегистрироваться</S.SecondaryButton>
-              {/* </Link> */}
             </S.Buttons>
           </>
         ) : (
@@ -193,11 +184,9 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
               <S.PrimaryButton onClick={handleRegister} disabled={isProcessing}>
                 Зарегистрироваться
               </S.PrimaryButton>
-              {/* <Link to="/register"> */}
                 <S.SecondaryButton onClick={redirectToRegister} disabled={isProcessing}>
                   Войти
                 </S.SecondaryButton>
-              {/* </Link> */}
             </S.Buttons>
           </>
         )}
