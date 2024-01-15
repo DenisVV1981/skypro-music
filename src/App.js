@@ -30,9 +30,9 @@ function App() {
         });
       }
       
-    }
+    };
   
-    fetchData()
+    fetchData();
   }, [])
 
 
