@@ -4,12 +4,14 @@ import GlobalStyle from './App.globalstyles.js';
 
 import { AppRoutes } from './routes.jsx';
 import { getTrackList } from './api';
+import { UserContext } from './components/Context/Context.jsx';
 
 
 function App() {
   const [trackList, setTrackList] = useState([]);
   const [trackToPlay, setTrackToPlay] = useState();
   const [sceleton, setSceleton] = useState(true);
+  const [user, setUser] = useState( window.localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,8 +39,10 @@ function App() {
 
   return (
     <Fragment>
-      <AppRoutes  sceleton={sceleton} trackList={trackList} trackToPlay={trackToPlay} setTrackToPlay={setTrackToPlay}/>
-      <GlobalStyle />
+      <UserContext.Provider value={user}>
+          <AppRoutes  setUser={setUser} sceleton={sceleton} trackList={trackList} trackToPlay={trackToPlay} setTrackToPlay={setTrackToPlay}/>
+          <GlobalStyle />
+      </UserContext.Provider>
     </Fragment>
   );
 }

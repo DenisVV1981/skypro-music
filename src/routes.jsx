@@ -2,36 +2,52 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 import { MainPage } from './pages/main';
 import { Categories } from './pages/categories';
 import { Favorities } from './pages/favorities';
-import { Login } from './pages/login';
-import { Registration } from './pages/register';
+import { AuthPage } from './pages/login/AuthPage';
 import { NotFound } from './pages/404';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { useState } from 'react';
+import { UserContext } from './components/Context/Context';
 
-export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton }) => {
-    const [user, setUser] = useState( window.localStorage.getItem("user"));
+
+export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton, setUser }) => {
+    
     const navigate = useNavigate();
-    const handleLogin = () => {
-        window.localStorage.setItem("user",{login: ""});
-        setUser( window.localStorage.getItem("user"));
-        navigate("/", {replace: true}); 
-    }
+ 
+    const handleRedirectToRegister = () => {
+        navigate("/registration", {replace: true}); 
+     };
+    const handleRedirectToLogin = () => {
+        navigate("/login", {replace: true}); 
+     };
+ 
     const handleLogout = () => {
         window.localStorage.removeItem("user");
         setUser(null);
     };
-    const isAuthorized = user !== null;
 
+    const handleSetTokens = (userData, newTokens)=>{
+        console.log(userData);
+        console.log(newTokens);
+
+        
+        window.localStorage.setItem("user",JSON.stringify(userData));
+        setUser( JSON.parse(window.localStorage.getItem("user")));
+        navigate("/", {replace: true}); 
+    };
+ 
     return (
-        <Routes>
-            <Route element= {<ProtectedRoute isAllowed={Boolean(isAuthorized)} redirectPath="/login"/>}>
-                <Route path="/" element= {<MainPage sceleton={sceleton} trackList={trackList} trackToPlay={trackToPlay} setTrackToPlay={setTrackToPlay} user={user} onAuthButtonClick={isAuthorized ? handleLogout : handleLogin}/>}/>
-                <Route path="/categories/:id" element= {<Categories/>}/>
-                <Route path="/favorities" element= {<Favorities/>}/>
-            </Route>
-            <Route path="/login" element= {<Login onAuthButtonClick={handleLogin}/>}/>
-            <Route path="/registration" element= {<Registration/>}/>
-            <Route path="*" element= {<NotFound/>}/>
-        </Routes>
+        <UserContext.Consumer>
+            { (user) => 
+                <Routes>
+                    <Route element= {<ProtectedRoute isAllowed={Boolean(user !== null)} redirectPath="/login"/>}>
+                        <Route path="/" element= {<MainPage logout={handleLogout} sceleton={sceleton} trackList={trackList} trackToPlay={trackToPlay} setTrackToPlay={setTrackToPlay}/>}/>
+                        <Route path="/categories/:id" element= {<Categories/>}/>
+                        <Route path="/favorities" element= {<Favorities/>}/>
+                    </Route>
+                    <Route path="/login" element= {<AuthPage isLoginMode={true} redirectToRegister={handleRedirectToRegister} setTokensCallback={handleSetTokens}/>}/>
+                    <Route path="/registration" element={<AuthPage isLoginMode={false} redirectToRegister={handleRedirectToLogin} setTokensCallback={handleSetTokens}/>}/>
+                    <Route path="*" element= {<NotFound/>}/>
+                </Routes>
+            }
+        </UserContext.Consumer>
     );
 };
