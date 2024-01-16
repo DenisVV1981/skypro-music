@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import { FluentProvider, webDarkTheme } from '@fluentui/react-components';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { store } from './store/store';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,4 +1,3 @@
-
 import * as S from '../../App.styles';
 
 import Player from '../../components/Player/Player.jsx';
@@ -10,22 +9,23 @@ import MainNavigation from '../../components/Navigation/MainNavigation.jsx';
 import FilterPanel from '../../components/FilterContent/FilterPanel.jsx';
 import SearchContent from '../../components/SearchContent/SearchContent.jsx';
 import ProgressBar from '../../components/ProgressPlayerBar/ProgressPlayerBar.jsx';
+
 import { useState, useRef } from 'react';
 
+import { useSelector } from 'react-redux';
+import { trackToPlaySelector } from '../../store/selectors/tracklist.js';
 
-export const MainPage = ({trackList, trackToPlay, setTrackToPlay, sceleton, logout})=> {
+export const MainPage = ({ sceleton, logout})=> {
+  const trackToPlay = useSelector(trackToPlaySelector);
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
- 
-  const handleStart = ()=>{
+  const audioRef = useRef(null); 
+
+  const handleStart = () => {
    audioRef.current.play();
-   setIsPlaying(true);
   };
  
   const handleStop = () => {
    audioRef.current.pause();
-   setIsPlaying(false);
   };
 
   const handlePrev = () => {
@@ -37,8 +37,6 @@ export const MainPage = ({trackList, trackToPlay, setTrackToPlay, sceleton, logo
   const handleShuffle = () => {
     alert('Еще не реализовано');
   };
-
-  const togglePlay = isPlaying ? handleStop : handleStart;
  
   const [isLooping, setIsLooping] = useState(false);
   
@@ -57,9 +55,9 @@ export const MainPage = ({trackList, trackToPlay, setTrackToPlay, sceleton, logo
 
   const currentTimeChanged = (event)=>{
     setCurrentTime(event.target.currentTime);
-let sec =  Math.floor(event?.target?.currentTime ?? 0);
+    let sec =  Math.floor(event?.target?.currentTime ?? 0);
     setFormattedCurrentTime(Math.floor(sec / 60).toString().padStart(2, '0') + ':' + (sec % 60).toString().padStart(2, '0')  + ' / ');
-sec = Math.floor(event?.target?.duration ?? 0);
+    sec = Math.floor(event?.target?.duration ?? 0);
     setFormatttedDuration(Math.floor(sec / 60).toString().padStart(2, '0')  + ':' + (sec % 60).toString().padStart(2, '0') );
   }; 
 
@@ -74,7 +72,10 @@ return (
             <SearchContent/>
           <S.CenterblockH2>Треки</S.CenterblockH2>
             <FilterPanel/>
-            <PlaylistContent sceleton={sceleton} trackList={trackList} setTrackToPlay={setTrackToPlay}/>
+            <PlaylistContent 
+              sceleton={sceleton}
+              handleStart={handleStart}
+              handleStop={handleStop}/>
         </S.MainCenterblock>
         <S.MainSidebar>
             < SidebarUserInfo logout={logout}/>
@@ -89,16 +90,14 @@ return (
             </S.BarPlayProgressTimer>
             <ProgressBar audioRef={audioRef} currentTime={currentTime} changeCurrentTime={changeCurrentTime}/>
             <S.BarPlayerBlock>
-                <audio  ref={audioRef} onTimeUpdate={(event) => currentTimeChanged(event)}>
+                <audio ref={audioRef} onTimeUpdate={(event) => currentTimeChanged(event)}>
                   <source src={trackToPlay.track_file} type='audio/mpeg'/>
                 </audio>
                 <Player 
-                  trackToPlay={trackToPlay}
                   audioRef={audioRef}
-                  togglePlay={togglePlay}
-                  isPlaying={isPlaying}
-                  handleStart={handleStart}
                   toggleLoop={toggleLoop}
+                  handleStart={handleStart}
+                  handleStop={handleStop}
                   isLooping={isLooping}
                   handlePrev={handlePrev}
                   handleNext={handleNext}

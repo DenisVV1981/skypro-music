@@ -1,12 +1,18 @@
 import {  useEffect } from 'react';
 import * as S from './Player.styles';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
+import { playTrack, pauseTrack } from '../../store/actions/creators/player';
 
+export default function Player({audioRef, handlePrev, handleNext, handleShuffle, handleStart, handleStop, toggleLoop, isLooping}) {
+  const trackToPlay = useSelector(trackToPlaySelector);
+  const isPlaying = useSelector(trackStateSelector);
 
-export default function Player({audioRef, handlePrev,handleNext,handleShuffle, trackToPlay, handleStart, togglePlay, isPlaying, toggleLoop, isLooping}) {
+  const dispatch = useDispatch();
 
-  
   const loadedHandleStart = () => {
+    dispatch(playTrack(trackToPlay));
     handleStart();
   };
 
@@ -20,6 +26,16 @@ export default function Player({audioRef, handlePrev,handleNext,handleShuffle, t
 
   }, [trackToPlay]);
 
+  const handlePlay = () => {
+    if (isPlaying) {
+      handleStop();
+      dispatch(pauseTrack(trackToPlay));
+    } else {
+      handleStart();
+      dispatch(playTrack(trackToPlay));
+    }
+  };
+
 return (
     <S.BarPlayer>
                 <S.PlayerControls>
@@ -28,7 +44,7 @@ return (
                       <use xlinkHref ="img/icon/sprite.svg#icon-prev"></use>
                     </S.PreviosSvg>
                   </S.PlayerButtonPrev>
-                  <S.PlayerButtonPlay onClick={togglePlay}>
+                  <S.PlayerButtonPlay onClick={handlePlay}>
                     <S.PlaySvg alt="play">
                       <use xlinkHref ={isPlaying ? "img/icon/sprite.svg#icon-pause":"img/icon/sprite.svg#icon-play"}></use>
                     </S.PlaySvg>
