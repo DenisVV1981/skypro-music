@@ -13,7 +13,7 @@ function PlaylistContent({sceleton, handleStart, handleStop}) {
 
   const handleTrackClick = (song) => {
 
-    if(song.id === trackToPlay.id){
+    if(song.id === trackToPlay?.id){
       if (trackIsPlaying) {
         dispatch(pauseTrack(song));
         // handleStop();
@@ -63,14 +63,14 @@ function PlaylistContent({sceleton, handleStart, handleStop}) {
                 <S.TrackTitle>
                   <S.TrackTitleImage>
 
-                    { song.id !== trackToPlay.id && (
+                    { song.id !== trackToPlay?.id && (
                     <S.TrackTitleSvg alt="music">
                       <use xlinkHref ="img/icon/sprite.svg#icon-note"></use>
                     </S.TrackTitleSvg>)}
 
-                    { song.id === trackToPlay.id && trackIsPlaying && (<S.TrackTitlePlaySvg alt="music"/>)}
+                    { song.id === trackToPlay?.id && trackIsPlaying && (<S.TrackTitlePlaySvg alt="music"/>)}
 
-                    { song.id === trackToPlay.id && !trackIsPlaying && (<S.TrackTitlePauseSvg alt="music"/>)}
+                    { song.id === trackToPlay?.id && !trackIsPlaying && (<S.TrackTitlePauseSvg alt="music"/>)}
 
                   </S.TrackTitleImage>
                   <S.TrackTitleText>

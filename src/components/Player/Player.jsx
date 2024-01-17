@@ -3,7 +3,7 @@ import * as S from './Player.styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
-import { playTrack, pauseTrack } from '../../store/actions/creators/player';
+import { playTrack, pauseTrack, nextTrack } from '../../store/actions/creators/player';
 
 export default function Player({audioRef, handlePrev, handleNext, handleShuffle, handleStart, handleStop, toggleLoop, isLooping}) {
   const trackToPlay = useSelector(trackToPlaySelector);
@@ -35,7 +35,10 @@ export default function Player({audioRef, handlePrev, handleNext, handleShuffle,
       dispatch(playTrack(trackToPlay));
     }
   };
-
+  
+  const handleNextTrack = () => {
+    dispatch(nextTrack(trackToPlay));
+  }
 return (
     <S.BarPlayer>
                 <S.PlayerControls>
@@ -49,7 +52,7 @@ return (
                       <use xlinkHref ={isPlaying ? "img/icon/sprite.svg#icon-pause":"img/icon/sprite.svg#icon-play"}></use>
                     </S.PlaySvg>
                   </S.PlayerButtonPlay>
-                  <S.PlayerButtonNext onClick={handleNext}>
+                  <S.PlayerButtonNext onClick={handleNextTrack}>
                     <S.NextSvg alt="next">
                       <use xlinkHref ="img/icon/sprite.svg#icon-next"></use>
                     </S.NextSvg>

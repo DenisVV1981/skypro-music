@@ -28,4 +28,4 @@ export const trackToPlaySelector = (store) => {
     return store.playlist.trackToPlay;
 };
 
-export const trackStateSelector  = (store) => store.player.state;
+export const trackStateSelector  = (store) => store.player.isPlaying;
