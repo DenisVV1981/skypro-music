@@ -52,9 +52,14 @@ export default function Player({audioRef, handlePrev, handleNext, handleShuffle,
     dispatch(nextTrack(trackToPlay));
   }
   const handlePrevTrack = () => {
-    dispatch(prevTrack(trackToPlay));
+    if(audioRef.current.currentTime < 5){
+      dispatch(prevTrack(trackToPlay));
+    }
+    else{ 
+      audioRef.current.currentTime = 0;
+    }
   }
-  const handleShuffleTrack = () => {
+  const handleShuffleTrack = () => { 
     dispatch(shuffleTrack());
   }
 
