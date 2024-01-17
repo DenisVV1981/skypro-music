@@ -1,4 +1,4 @@
-import { NEXT_TRACK, PLAY_TRACK } from "../actions/types/player";
+import { NEXT_TRACK, PLAY_TRACK, PREV_TRACK } from "../actions/types/player";
 import { ADD_TRACKS } from "../actions/types/playlist";
 
 const initialState = {
@@ -49,6 +49,30 @@ export function playlistReducer(state = initialState, action) {
                 tracksError: state.tracksError,
             };
         }
+        case PREV_TRACK: {
+            const {track} = action.payload;
+
+            let index = state.tracks.indexOf(track);
+            let newTrackToPlay = null;
+
+            if(index === -1){
+                newTrackToPlay = state.tracks[0];
+            }
+            else if (index === 0 ){
+                newTrackToPlay = state.tracks[state.tracks.length-1];
+            }
+            else {
+                newTrackToPlay = state.tracks[index -1];
+            }
+
+            return {
+                tracks: state.tracks,
+                trackToPlay: newTrackToPlay,
+                tracksError: state.tracksError,
+            };
+        }
+
+
         default: 
             return state;
     };

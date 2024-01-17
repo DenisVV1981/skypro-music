@@ -3,7 +3,7 @@ import * as S from './Player.styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
-import { playTrack, pauseTrack, nextTrack } from '../../store/actions/creators/player';
+import { playTrack, pauseTrack, nextTrack, prevTrack } from '../../store/actions/creators/player';
 
 export default function Player({audioRef, handlePrev, handleNext, handleShuffle, handleStart, handleStop, toggleLoop, isLooping}) {
   const trackToPlay = useSelector(trackToPlaySelector);
@@ -39,10 +39,15 @@ export default function Player({audioRef, handlePrev, handleNext, handleShuffle,
   const handleNextTrack = () => {
     dispatch(nextTrack(trackToPlay));
   }
+  const handlePrevTrack = () => {
+    dispatch(prevTrack(trackToPlay));
+  }
+
+
 return (
     <S.BarPlayer>
                 <S.PlayerControls>
-                  <S.PlayerButtonPrev onClick={handlePrev}>
+                  <S.PlayerButtonPrev onClick={handlePrevTrack}>
                     <S.PreviosSvg alt="prev">
                       <use xlinkHref ="img/icon/sprite.svg#icon-prev"></use>
                     </S.PreviosSvg>

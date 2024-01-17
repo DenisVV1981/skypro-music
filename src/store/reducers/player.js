@@ -1,5 +1,5 @@
 
-import {NEXT_TRACK, PAUSE_TRACK, PLAY_TRACK} from '../actions/types/player.js';
+import {NEXT_TRACK, PAUSE_TRACK, PLAY_TRACK, PREV_TRACK} from '../actions/types/player.js';
 
 const initialState = {
     isPlaying: false
@@ -19,6 +19,11 @@ export function playerReducer(state = initialState, action) {
             };
         }
         case NEXT_TRACK: {
+            return {
+                isPlaying: true,
+            };
+        }
+        case PREV_TRACK: {
             return {
                 isPlaying: true,
             };
