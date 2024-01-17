@@ -28,6 +28,7 @@ export function playerReducer(state = initialState, action) {
                 isPlaying: true,
             };
         }
+        
         default: 
             return state;
     };

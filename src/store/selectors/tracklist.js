@@ -1,4 +1,7 @@
-const trackSelector = (store) => store.playlist.tracks;
+const trackSelector = (store) => {
+    return store.playlist.tracks;
+};
+
 const trackErrorSelector = (store) => store.playlist.tracksError;
 
 export const trackIdsSelector = (store) => trackSelector(store)?.allIds || [];
@@ -29,3 +32,5 @@ export const trackToPlaySelector = (store) => {
 };
 
 export const trackStateSelector  = (store) => store.player.isPlaying;
+
+export const isShuffleOnSelector  = (store) => store.playlist.shuffledTracks !== null;
