@@ -8,7 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { UserContext } from './components/Context/Context';
 
 
-export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton, setUser }) => {
+export const AppRoutes = ({ sceleton, setUser }) => {
     
     const navigate = useNavigate();
  
@@ -39,7 +39,7 @@ export const AppRoutes = ({ trackList, trackToPlay, setTrackToPlay, sceleton, se
             { (user) => 
                 <Routes>
                     <Route element= {<ProtectedRoute isAllowed={Boolean(user !== null)} redirectPath="/login"/>}>
-                        <Route path="/" element= {<MainPage logout={handleLogout} sceleton={sceleton} trackList={trackList} trackToPlay={trackToPlay} setTrackToPlay={setTrackToPlay}/>}/>
+                        <Route path="/" element= {<MainPage logout={handleLogout} sceleton={sceleton}/>}/>
                         <Route path="/categories/:id" element= {<Categories/>}/>
                         <Route path="/favorities" element= {<Favorities/>}/>
                     </Route>

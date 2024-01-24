@@ -1,7 +1,30 @@
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { trackStateSelector, trackToPlaySelector, tracksSelector } from '../../store/selectors/tracklist';
 
-function PlaylistContent({sceleton, trackList, setTrackToPlay}) {
+import { playTrack, pauseTrack } from '../../store/actions/creators/player';
+
+function PlaylistContent({sceleton, handleStart, handleStop}) {
+  const dispatch = useDispatch();
+  const trackList = useSelector(tracksSelector);
+  const trackToPlay = useSelector(trackToPlaySelector);
+  const trackIsPlaying = useSelector(trackStateSelector);
+
+  const handleTrackClick = (song) => {
+
+    if(song.id === trackToPlay?.id){
+      if (trackIsPlaying) {
+        dispatch(pauseTrack(song));
+        // handleStop();
+      } else {
+        dispatch(playTrack(song));
+      }
+    }
+    else{
+      dispatch(playTrack(song));
+    }
+  };
 
   return (
     <S.CenterblockContent>
@@ -35,13 +58,20 @@ function PlaylistContent({sceleton, trackList, setTrackToPlay}) {
       {!sceleton && trackList.list && (
         <S.ContentPlayList>
           {trackList.list.map((song) => {
-            return <S.PlaylistItem onClick={()=>{setTrackToPlay(song)}} key={song.id}>
+            return <S.PlaylistItem onClick={()=>{handleTrackClick(song)}} key={song.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>
                   <S.TrackTitleImage>
-                    <S.trackTitleSvg alt="music">
+
+                    { song.id !== trackToPlay?.id && (
+                    <S.TrackTitleSvg alt="music">
                       <use xlinkHref ="img/icon/sprite.svg#icon-note"></use>
-                    </S.trackTitleSvg>
+                    </S.TrackTitleSvg>)}
+
+                    { song.id === trackToPlay?.id && trackIsPlaying && (<S.TrackTitlePlaySvg alt="music"/>)}
+
+                    { song.id === trackToPlay?.id && !trackIsPlaying && (<S.TrackTitlePauseSvg alt="music"/>)}
+
                   </S.TrackTitleImage>
                   <S.TrackTitleText>
                     <S.TrackTitleLink>{song.name}

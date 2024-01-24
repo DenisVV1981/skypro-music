@@ -1,39 +1,82 @@
 import {  useEffect } from 'react';
 import * as S from './Player.styles';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { isShuffleOnSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
+import { playTrack, pauseTrack, nextTrack, prevTrack, shuffleTrack } from '../../store/actions/creators/player';
 
+export default function Player({audioRef, handlePrev, handleNext, handleShuffle, handleStart, handleStop, toggleLoop, isLooping}) {
+  const trackToPlay = useSelector(trackToPlaySelector);
+  const isPlaying = useSelector(trackStateSelector);
+  const isShuffleOn = useSelector(isShuffleOnSelector);
 
-export default function Player({audioRef, handlePrev,handleNext,handleShuffle, trackToPlay, handleStart, togglePlay, isPlaying, toggleLoop, isLooping}) {
+  const dispatch = useDispatch();
 
-  
   const loadedHandleStart = () => {
+    dispatch(playTrack(trackToPlay));
     handleStart();
   };
 
+  const handleEnded = () => {
+    if(!isLooping){
+      handleStop();
+      dispatch(nextTrack(trackToPlay));
+      console.log("has ended");
+    }
+  };
+
   useEffect(() => {
+    
     audioRef.current.load();
     audioRef.current.addEventListener("loadedmetadata", loadedHandleStart);
+    audioRef.current.addEventListener("ended", handleEnded);
 
     return () => {
       audioRef.current.removeEventListener("loadedmetadata", loadedHandleStart);
+      audioRef.current.removeEventListener("ended", handleEnded);
     }
 
   }, [trackToPlay]);
 
+  const handlePlay = () => {
+    if (isPlaying) {
+      handleStop();
+      dispatch(pauseTrack(trackToPlay));
+    } else {
+      handleStart();
+      dispatch(playTrack(trackToPlay));
+    }
+  };
+  
+  const handleNextTrack = () => {
+    dispatch(nextTrack(trackToPlay));
+  }
+  const handlePrevTrack = () => {
+    if(audioRef.current.currentTime < 5){
+      dispatch(prevTrack(trackToPlay));
+    }
+    else{ 
+      audioRef.current.currentTime = 0;
+    }
+  }
+  const handleShuffleTrack = () => { 
+    dispatch(shuffleTrack());
+  }
+
 return (
     <S.BarPlayer>
                 <S.PlayerControls>
-                  <S.PlayerButtonPrev onClick={handlePrev}>
+                  <S.PlayerButtonPrev onClick={handlePrevTrack}>
                     <S.PreviosSvg alt="prev">
                       <use xlinkHref ="img/icon/sprite.svg#icon-prev"></use>
                     </S.PreviosSvg>
                   </S.PlayerButtonPrev>
-                  <S.PlayerButtonPlay onClick={togglePlay}>
+                  <S.PlayerButtonPlay onClick={handlePlay}>
                     <S.PlaySvg alt="play">
                       <use xlinkHref ={isPlaying ? "img/icon/sprite.svg#icon-pause":"img/icon/sprite.svg#icon-play"}></use>
                     </S.PlaySvg>
                   </S.PlayerButtonPlay>
-                  <S.PlayerButtonNext onClick={handleNext}>
+                  <S.PlayerButtonNext onClick={handleNextTrack}>
                     <S.NextSvg alt="next">
                       <use xlinkHref ="img/icon/sprite.svg#icon-next"></use>
                     </S.NextSvg>
@@ -43,9 +86,9 @@ return (
                       <use xlinkHref ={isLooping ? "img/icon/sprite.svg#icon-repeat-active" : "img/icon/sprite.svg#icon-repeat"}></use>
                     </S.RepeatSvg>
                   </S.PlayerButtonRepeat>
-                  <S.PlayerButtonShuffle onClick={handleShuffle}>
+                  <S.PlayerButtonShuffle onClick={handleShuffleTrack}>
                     <S.ShuffleSvg alt="shuffle">
-                      <use xlinkHref ="img/icon/sprite.svg#icon-shuffle"></use>
+                      <use xlinkHref ={isShuffleOn ? "img/icon/sprite.svg#icon-shuffle-active" : "img/icon/sprite.svg#icon-shuffle"}></use>
                     </S.ShuffleSvg>
                   </S.PlayerButtonShuffle>
                 </S.PlayerControls>
