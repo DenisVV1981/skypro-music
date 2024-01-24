@@ -15,7 +15,7 @@ import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { trackToPlaySelector } from '../../store/selectors/tracklist.js';
 
-export const MainPage = ({ sceleton, logout})=> {
+export const MainPage = ({ sceleton})=> {
   const trackToPlay = useSelector(trackToPlaySelector);
 
   const audioRef = useRef(null); 
@@ -62,54 +62,21 @@ export const MainPage = ({ sceleton, logout})=> {
   }; 
 
 return (
-   
-    <S.Wrapper>
-     
-    <S.Container>
-      <S.Main>
-        <MainNavigation  logout={logout}/>
-        <S.MainCenterblock>
-            <SearchContent/>
-          <S.CenterblockH2>Треки</S.CenterblockH2>
-            <FilterPanel/>
-            <PlaylistContent 
-              sceleton={sceleton}
-              handleStart={handleStart}
-              handleStop={handleStop}/>
-        </S.MainCenterblock>
-        <S.MainSidebar>
-            < SidebarUserInfo logout={logout}/>
-            < SidebarContent />
-        </S.MainSidebar>
-      </S.Main>
-      {trackToPlay && (
-        <S.Bar>
-          <S.BarContent>
-            <S.BarPlayProgressTimer>
-              {formattedCurrentTime}{formatttedDuration}
-            </S.BarPlayProgressTimer>
-            <ProgressBar audioRef={audioRef} currentTime={currentTime} changeCurrentTime={changeCurrentTime}/>
-            <S.BarPlayerBlock>
-                <audio ref={audioRef} onTimeUpdate={(event) => currentTimeChanged(event)}>
-                  <source src={trackToPlay.track_file} type='audio/mpeg'/>
-                </audio>
-                <Player 
-                  audioRef={audioRef}
-                  toggleLoop={toggleLoop}
-                  handleStart={handleStart}
-                  handleStop={handleStop}
-                  isLooping={isLooping}
-                  handlePrev={handlePrev}
-                  handleNext={handleNext}
-                  handleShuffle={handleShuffle}
-                />
-                <Volume audioRef={audioRef}/>
-            </S.BarPlayerBlock>
-          </S.BarContent>
-        </S.Bar>
-        )}
-      <S.Footer></S.Footer>
-    </S.Container>
-  </S.Wrapper>
+<>
+ 
+
+    <S.CenterblockH2>Треки</S.CenterblockH2>
+      <FilterPanel/>
+      <PlaylistContent 
+        sceleton={sceleton}
+        handleStart={handleStart}
+        handleStop={handleStop}/>
+ 
+  <S.MainSidebar>
+      < SidebarContent />
+  </S.MainSidebar>
+</>
+
+  
 );
 };
