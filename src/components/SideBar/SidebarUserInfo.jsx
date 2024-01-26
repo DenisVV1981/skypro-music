@@ -13,6 +13,7 @@ export default function SidebarUserInfo({ logout}) {
                 </svg>
               </S.SidebarIcon>
             </S.SidebarPersonal>
+            
     );
 }
 

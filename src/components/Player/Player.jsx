@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isShuffleOnSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 import { playTrack, pauseTrack, nextTrack, prevTrack, shuffleTrack } from '../../store/actions/creators/player';
 
-export default function Player({audioRef, handlePrev, handleNext, handleShuffle, handleStart, handleStop, toggleLoop, isLooping}) {
+export default function Player({audioRef, handleStart, handleStop, toggleLoop, isLooping}) {
   const trackToPlay = useSelector(trackToPlaySelector);
   const isPlaying = useSelector(trackStateSelector);
   const isShuffleOn = useSelector(isShuffleOnSelector);

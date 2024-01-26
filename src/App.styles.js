@@ -38,6 +38,22 @@ width: auto;
 flex-grow: 3;
 padding: 20px 40px 20px 111px;
 `
+export const MainBlock = styled.div`
+display: flex;
+gap: 161px;
+`
+export const MainCenter = styled.div`
+width: auto;
+-webkit-box-flex: 3;
+-ms-flex-positive: 3;
+flex-grow: 3;
+
+`
+export const MainCenterblockHeader = styled.div`
+display: flex;
+gap: 200px;
+`
+
 export const CenterblockH2 = styled.h2`
 font-style: normal;
 font-weight: 400;

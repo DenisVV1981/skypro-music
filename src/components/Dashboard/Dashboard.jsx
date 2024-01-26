@@ -24,16 +24,6 @@ export const Dashboard = ({logout}) => {
    audioRef.current.pause();
   };
 
-  const handlePrev = () => {
-    alert('Еще не реализовано');
-  };
-  const handleNext = () => {
-    alert('Еще не реализовано');
-  };
-  const handleShuffle = () => {
-    alert('Еще не реализовано');
-  };
- 
   const [isLooping, setIsLooping] = useState(false);
   
   const toggleLoop = () => {
@@ -67,8 +57,10 @@ export const Dashboard = ({logout}) => {
       <S.Main>
         <MainNavigation  logout={logout}/>
         <S.MainCenterblock>
-          <SearchContent/>
-          <SidebarUserInfo logout={logout}/>
+          <S.MainCenterblockHeader>
+            <SearchContent/>
+            <SidebarUserInfo logout={logout}/>
+          </S.MainCenterblockHeader>
           <Outlet />
         </S.MainCenterblock>
       </S.Main>
@@ -89,9 +81,6 @@ export const Dashboard = ({logout}) => {
                     handleStart={handleStart}
                     handleStop={handleStop}
                     isLooping={isLooping}
-                    handlePrev={handlePrev}
-                    handleNext={handleNext}
-                    handleShuffle={handleShuffle}
                   />
                   <Volume audioRef={audioRef}/>
               </S.BarPlayerBlock>
