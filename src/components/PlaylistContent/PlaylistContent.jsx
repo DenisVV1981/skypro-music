@@ -5,7 +5,7 @@ import { trackStateSelector, trackToPlaySelector, tracksSelector } from '../../s
 
 import { playTrack, pauseTrack } from '../../store/actions/creators/player';
 
-function PlaylistContent({sceleton, handleStart, handleStop}) {
+function PlaylistContent({sceleton}) {
   const dispatch = useDispatch();
   const trackList = useSelector(tracksSelector);
   const trackToPlay = useSelector(trackToPlaySelector);
