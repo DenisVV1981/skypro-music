@@ -1,5 +1,5 @@
 import { NEXT_TRACK, PLAY_TRACK, PREV_TRACK, SHUFFLE_TRACK } from "../actions/types/player";
-import { ADD_TRACKS } from "../actions/types/playlist";
+import { ADD_FAVORITE_TRACKS, ADD_TRACKS } from "../actions/types/playlist";
 
 const initialState = {
     tracks: [],
@@ -26,6 +26,20 @@ export function playlistReducer(state = initialState, action) {
                 shuffledTracks: state.shuffledTracks,
                 trackToPlay: state.trackToPlay,
                 tracksError,
+                favoriteTracks: state.favoriteTracks,
+                favoriteTracksError: state.favoriteTracksError,
+            };
+        }
+        case ADD_FAVORITE_TRACKS: {
+            const {tracks, tracksError} = action.payload;
+
+            return {
+                tracks:state.tracks,
+                shuffledTracks: state.shuffledTracks,
+                trackToPlay: state.trackToPlay,
+                tracksError:state.tracksError,
+                favoriteTracks: tracks,
+                favoriteTracksError: tracksError,
             };
         }
         case PLAY_TRACK: {
@@ -36,6 +50,8 @@ export function playlistReducer(state = initialState, action) {
                 shuffledTracks: state.shuffledTracks,
                 trackToPlay: track,
                 tracksError: state.tracksError,
+                favoriteTracks: state.favoriteTracks,
+                favoriteTracksError: state.favoriteTracksError,
             };
         }
         case NEXT_TRACK: {
@@ -61,6 +77,8 @@ export function playlistReducer(state = initialState, action) {
                 shuffledTracks: state.shuffledTracks,
                 trackToPlay: newTrackToPlay,
                 tracksError: state.tracksError,
+                favoriteTracks: state.favoriteTracks,
+                favoriteTracksError: state.favoriteTracksError,
             };
         }
         case PREV_TRACK: {
@@ -86,6 +104,8 @@ export function playlistReducer(state = initialState, action) {
                 shuffledTracks: state.shuffledTracks,
                 trackToPlay: newTrackToPlay,
                 tracksError: state.tracksError,
+                favoriteTracks: state.favoriteTracks,
+                favoriteTracksError: state.favoriteTracksError,
             };
         }
         case SHUFFLE_TRACK: {
@@ -102,6 +122,8 @@ export function playlistReducer(state = initialState, action) {
                 shuffledTracks: shuffleList,
                 trackToPlay: state.trackToPlay,
                 tracksError: state.tracksError,
+                favoriteTracks: state.favoriteTracks,
+                favoriteTracksError: state.favoriteTracksError,
             };
         }
 

@@ -27,6 +27,13 @@ export const tracksSelector = (store) => {
     }
 };
 
+export const tracksFavoriteSelector = (store) => {
+    return {
+        list: store.playlist.tracks,
+        errorMessage: store.playlist.tracksError,
+    }
+};
+
 export const trackToPlaySelector = (store) => {
     return store.playlist.trackToPlay;
 };

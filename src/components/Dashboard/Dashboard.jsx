@@ -10,6 +10,8 @@ import { trackToPlaySelector } from "../../store/selectors/tracklist.js";
 import SearchContent from "../SearchContent/SearchContent.jsx";
 import SidebarUserInfo from "../SideBar/SidebarUserInfo.jsx";
 
+
+
 export const Dashboard = ({logout}) => {
 
   const trackToPlay = useSelector(trackToPlaySelector);

@@ -1,8 +1,6 @@
 // import logo from './logo.svg';
 import React, { Fragment, useEffect, useState }  from 'react';
 import GlobalStyle from './App.globalstyles.js';
-
-
 import { AppRoutes } from './routes.jsx';
 import { getTrackList } from './api';
 import { UserContext} from './components/Context/Context.jsx';

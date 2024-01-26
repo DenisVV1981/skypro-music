@@ -1,13 +1,13 @@
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackStateSelector, trackToPlaySelector, tracksSelector } from '../../store/selectors/tracklist';
+import { trackStateSelector, trackToPlaySelector, tracksFavoriteSelector, tracksSelector } from '../../store/selectors/tracklist';
 
 import { playTrack, pauseTrack } from '../../store/actions/creators/player';
 
-function PlaylistContent({sceleton}) {
+function PlaylistContent({sceleton, isFavorite = false}) {
   const dispatch = useDispatch();
-  const trackList = useSelector(tracksSelector);
+  const trackList = useSelector(isFavorite ? tracksFavoriteSelector : tracksSelector);
   const trackToPlay = useSelector(trackToPlaySelector);
   const trackIsPlaying = useSelector(trackStateSelector);
 

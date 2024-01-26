@@ -44,7 +44,7 @@ export const AppRoutes = ({ sceleton, setUser }) => {
                         <Route path="/" element={<Dashboard logout={handleLogout}/>}>
                             <Route index element= {<MainPage  sceleton={sceleton}/>}/>
                             <Route path="/categories/:id" element= {<Categories/>}/>
-                            <Route path="/favorities" element= {<Favorities sceleton={sceleton}/>}/>
+                            <Route path="/favorities" element= {<Favorities/>}/>
                         </Route>
                     </Route>
                     <Route path="/login" element= {<AuthPage isLoginMode={true} redirectToRegister={handleRedirectToRegister} setTokensCallback={handleSetTokens}/>}/>
