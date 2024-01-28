@@ -1,16 +1,19 @@
 import * as S from '../../App.styles';
 import React, {useEffect, useState}  from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FilterPanel from '../../components/FilterContent/FilterPanel';
 import PlaylistContent from '../../components/PlaylistContent/PlaylistContent';
 import { getFavoriteTrackList } from '../../api';
 import { addFavoriteTracks } from '../../store/actions/creators/playlist';
+import { tracksFavoriteSelector } from '../../store/selectors/tracklist';
 
 
 
 export const Favorities = ()=> {
 const dispatch = useDispatch();
 const [sceleton, setSceleton] = useState(true);
+
+const trackList = useSelector(tracksFavoriteSelector);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,7 +43,7 @@ return (
     <S.MainCenter>
         <S.CenterblockH2>Мои треки</S.CenterblockH2>
         <FilterPanel/>
-        <PlaylistContent isFavorite = {true} sceleton={sceleton}/>
+        <PlaylistContent trackList = {trackList} sceleton={sceleton}/>
     </S.MainCenter>
 </S.MainBlock>
 );

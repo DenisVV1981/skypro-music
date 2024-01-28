@@ -32,6 +32,7 @@ export const AppRoutes = ({ sceleton, setUser }) => {
 
         
         window.localStorage.setItem("user",JSON.stringify(userData));
+        window.localStorage.setItem("userTokens",JSON.stringify(newTokens));
         setUser( JSON.parse(window.localStorage.getItem("user")));
         navigate("/", {replace: true}); 
     };

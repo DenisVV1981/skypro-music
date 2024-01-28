@@ -32,8 +32,8 @@ export default function Player({audioRef, handleStart, handleStop, toggleLoop, i
     audioRef.current.addEventListener("ended", handleEnded);
 
     return () => {
-      audioRef.current.removeEventListener("loadedmetadata", loadedHandleStart);
-      audioRef.current.removeEventListener("ended", handleEnded);
+      audioRef?.current?.removeEventListener("loadedmetadata", loadedHandleStart);
+      audioRef?.current?.removeEventListener("ended", handleEnded);
     }
 
   }, [trackToPlay]);
