@@ -155,4 +155,54 @@ export function refreshToken() {
   });
 }
 
+export function addTrackToFavorite ({id, updateToken=true}) {
 
+  let tokenObject =JSON.parse(window.localStorage.getItem("userTokens"));
+
+  return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${tokenObject.access}` ,
+    },
+  }) 
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json().then((responseData) => {
+        return responseData;
+      });
+    } else if (response.status === 401) {
+      if (updateToken) { 
+         refreshToken();
+         return addTrackToFavorite({id, updateToken: false});
+        }
+    } else {
+      throw new Error('Ошибка сервера')
+    }
+    }); 
+}
+
+export function deleteTrackFromFavorite ({id, updateToken=true}) {
+
+  let tokenObject =JSON.parse(window.localStorage.getItem("userTokens"));
+
+  return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${tokenObject.access}` ,
+    },
+  }) 
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json().then((responseData) => {
+        return responseData;
+      });
+    } else if (response.status === 401) {
+      if (updateToken) { 
+         refreshToken();
+         return deleteTrackFromFavorite({id, updateToken: false});
+        }
+    } else {
+      throw new Error('Ошибка сервера')
+    }
+    }); 
+}

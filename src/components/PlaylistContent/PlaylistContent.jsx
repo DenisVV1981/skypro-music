@@ -25,6 +25,8 @@ function PlaylistContent({sceleton, trackList}) {
     }
   };
 
+  const user = JSON.parse(window.localStorage.getItem("user"));
+
   return (
     <S.CenterblockContent>
       <S.ContentTitle>
@@ -84,11 +86,11 @@ function PlaylistContent({sceleton, trackList}) {
                 <S.TrackAlbum>
                   <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
                 </S.TrackAlbum>
-                <div>
+                <div> 
                   <S.TrackTimeSvg alt="time">
-                    <use xlinkHref ="img/icon/sprite.svg#icon-like"></use>
+                    <use xlinkHref ={song.stared_user?.filter(item => item.id === user.id).length > 0 ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
                   </S.TrackTimeSvg>
-                  <span>{song.time}</span>
+                  <span>{Math.floor(song.duration_in_seconds / 60).toString().padStart(2, '0') + ':' + (song.duration_in_seconds % 60).toString().padStart(2, '0')}</span>
                 </div>
               </S.PlaylistTrack>
             </S.PlaylistItem>
