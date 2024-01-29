@@ -8,10 +8,8 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { UserContext } from './components/Context/Context';
 import { Dashboard } from './components/Dashboard/Dashboard';
 
-
-
-export const AppRoutes = ({ sceleton, setUser }) => {
-    
+export const AppRoutes = ({ setUser }) => {
+   
     const navigate = useNavigate();
  
     const handleRedirectToRegister = () => {
@@ -43,7 +41,7 @@ export const AppRoutes = ({ sceleton, setUser }) => {
                 <Routes>
                     <Route element= {<ProtectedRoute isAllowed={Boolean(user !== null)} redirectPath="/login"/>}>
                         <Route path="/" element={<Dashboard logout={handleLogout}/>}>
-                            <Route index element= {<MainPage  sceleton={sceleton}/>}/>
+                            <Route index element= {<MainPage />}/>
                             <Route path="/categories/:id" element= {<Categories/>}/>
                             <Route path="/favorities" element= {<Favorities/>}/>
                         </Route>

@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 
 import { playTrack, pauseTrack } from '../../store/actions/creators/player';
+import { addTrackToFavorite, deleteTrackFromFavorite } from '../../api';
 
-function PlaylistContent({sceleton, trackList}) {
+function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback}) {
   const dispatch = useDispatch();
   const trackToPlay = useSelector(trackToPlaySelector);
   const trackIsPlaying = useSelector(trackStateSelector);
@@ -22,6 +23,18 @@ function PlaylistContent({sceleton, trackList}) {
     }
     else{
       dispatch(playTrack(song));
+    }
+  };
+
+  const handleLike = (song) => {
+    return (event) => {
+      event.stopPropagation();
+      const isLike = song.stared_user?.filter(item => item.id === user.id).length > 0;
+      if(isLike || isFavorite){
+        deleteTrackFromFavorite({id: song.id}).then(() => fetchCallback());
+      } else {
+        addTrackToFavorite({id: song.id}).then(() => fetchCallback());
+      }
     }
   };
 
@@ -88,7 +101,7 @@ function PlaylistContent({sceleton, trackList}) {
                 </S.TrackAlbum>
                 <div> 
                   <S.TrackTimeSvg alt="time">
-                    <use xlinkHref ={song.stared_user?.filter(item => item.id === user.id).length > 0 ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
+                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.stared_user?.filter(item => item.id === user.id).length > 0 ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
                   </S.TrackTimeSvg>
                   <span>{Math.floor(song.duration_in_seconds / 60).toString().padStart(2, '0') + ':' + (song.duration_in_seconds % 60).toString().padStart(2, '0')}</span>
                 </div>

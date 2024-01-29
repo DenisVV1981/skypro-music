@@ -15,24 +15,24 @@ const [sceleton, setSceleton] = useState(true);
 
 const trackList = useSelector(tracksFavoriteSelector);
 
+    const fetchData = async () => {
+
+      try {
+        const tracks = await getFavoriteTrackList();
+        dispatch(addFavoriteTracks({
+          list: tracks
+        }));
+        setSceleton(false);
+      } catch (error) {
+        console.log(error);
+        setSceleton(false);
+        dispatch(addFavoriteTracks({
+          errorMessage: "Не удалось загрузить плейлист, попробуйте позже."
+        }));
+      }
+      
+    };
     useEffect(() => {
-        const fetchData = async () => {
-    
-          try {
-            const tracks = await getFavoriteTrackList();
-            dispatch(addFavoriteTracks({
-              list: tracks
-            }));
-            setSceleton(false);
-          } catch (error) {
-            console.log(error);
-            setSceleton(false);
-            dispatch(addFavoriteTracks({
-              errorMessage: "Не удалось загрузить плейлист, попробуйте позже."
-            }));
-          }
-          
-        };
       
         fetchData();
       }, [])
@@ -43,7 +43,7 @@ return (
     <S.MainCenter>
         <S.CenterblockH2>Мои треки</S.CenterblockH2>
         <FilterPanel/>
-        <PlaylistContent trackList = {trackList} sceleton={sceleton}/>
+        <PlaylistContent fetchCallback={fetchData} isFavorite={true} trackList = {trackList} sceleton={sceleton}/>
     </S.MainCenter>
 </S.MainBlock>
 );
