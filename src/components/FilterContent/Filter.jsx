@@ -1,11 +1,15 @@
 import * as S from './Filter.styles';
 import React from 'react'
 
-
-
-
 // вместо использования переменной props, декомпозировал его свойства на отдельные параметры
-export default function Filter({onClickCallback, filtername, visible, items}) {
+export default function Filter({onClickCallback, filtername, visible, items, onFilterSelected, selectedValues}) {
+
+  const handleItemClick = (filterValue) => {
+    return (event) => {
+        onFilterSelected(filterValue);
+        event.stopPropagation();
+    }
+  };
     return (
         <S.FilterButton onClick={onClickCallback}>
             <div>{filtername}</div>
@@ -14,7 +18,7 @@ export default function Filter({onClickCallback, filtername, visible, items}) {
                 <S.FilterPanel>
                     <div>
                     <S.FilterList>
-                        {items.map( (item)=>{ return <li> {item} </li> } )}
+                        {items.map((item)=>{ return <li id={item} style={selectedValues.indexOf(item) === -1 ? {} : {color: "purple"}}  onClick={handleItemClick(item)}> {item} </li> } )}
                     </S.FilterList>
                     </div>
                 </S.FilterPanel>
@@ -22,3 +26,4 @@ export default function Filter({onClickCallback, filtername, visible, items}) {
         </S.FilterButton>
     );
 };
+

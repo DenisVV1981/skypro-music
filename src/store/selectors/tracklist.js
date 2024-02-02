@@ -1,5 +1,13 @@
 const trackSelector = (store) => {
-    return store.playlist.tracks;
+    const tracks = store.playlist.tracks;
+    const filter = store.filter;
+    // создать новый массив треков, отфильтрованный по filtr и вернуть новый массив
+    let newArrayFiltredTracks  = tracks.filter((track) => {
+        return filter.authorFilter.length === 0
+        ? true
+        : filter.authorFilter.indexOf(track.author) !== -1;
+    });
+    return newArrayFiltredTracks;
 };
 
 const trackErrorSelector = (store) => store.playlist.tracksError;

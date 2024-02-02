@@ -16,7 +16,6 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
     if(song.id === trackToPlay?.id){
       if (trackIsPlaying) {
         dispatch(pauseTrack(song));
-        // handleStop();
       } else {
         dispatch(playTrack(song));
       }

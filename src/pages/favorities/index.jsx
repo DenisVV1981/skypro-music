@@ -7,8 +7,6 @@ import { getFavoriteTrackList } from '../../api';
 import { addFavoriteTracks } from '../../store/actions/creators/playlist';
 import { tracksFavoriteSelector } from '../../store/selectors/tracklist';
 
-
-
 export const Favorities = ()=> {
 const dispatch = useDispatch();
 const [sceleton, setSceleton] = useState(true);
