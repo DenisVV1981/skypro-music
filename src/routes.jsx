@@ -6,10 +6,10 @@ import { AuthPage } from './pages/login/AuthPage';
 import { NotFound } from './pages/404';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { UserContext } from './components/Context/Context';
+import { Dashboard } from './components/Dashboard/Dashboard';
 
-
-export const AppRoutes = ({ sceleton, setUser }) => {
-    
+export const AppRoutes = ({ setUser }) => {
+   
     const navigate = useNavigate();
  
     const handleRedirectToRegister = () => {
@@ -30,6 +30,7 @@ export const AppRoutes = ({ sceleton, setUser }) => {
 
         
         window.localStorage.setItem("user",JSON.stringify(userData));
+        window.localStorage.setItem("userTokens",JSON.stringify(newTokens));
         setUser( JSON.parse(window.localStorage.getItem("user")));
         navigate("/", {replace: true}); 
     };
@@ -39,9 +40,11 @@ export const AppRoutes = ({ sceleton, setUser }) => {
             { (user) => 
                 <Routes>
                     <Route element= {<ProtectedRoute isAllowed={Boolean(user !== null)} redirectPath="/login"/>}>
-                        <Route path="/" element= {<MainPage logout={handleLogout} sceleton={sceleton}/>}/>
-                        <Route path="/categories/:id" element= {<Categories/>}/>
-                        <Route path="/favorities" element= {<Favorities/>}/>
+                        <Route path="/" element={<Dashboard logout={handleLogout}/>}>
+                            <Route index element= {<MainPage />}/>
+                            <Route path="/categories/:id" element= {<Categories/>}/>
+                            <Route path="/favorities" element= {<Favorities/>}/>
+                        </Route>
                     </Route>
                     <Route path="/login" element= {<AuthPage isLoginMode={true} redirectToRegister={handleRedirectToRegister} setTokensCallback={handleSetTokens}/>}/>
                     <Route path="/registration" element={<AuthPage isLoginMode={false} redirectToRegister={handleRedirectToLogin} setTokensCallback={handleSetTokens}/>}/>

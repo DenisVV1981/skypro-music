@@ -89,8 +89,6 @@ export function loginUser({email, password, callbackForResponse}) {
   ;
 }
 
-
-
 export function getToken({email, password}) {
   return fetch("https://skypro-music-api.skyeng.tech/user/token/", {
      method: "POST",
@@ -106,3 +104,105 @@ export function getToken({email, password}) {
    .then((response) => response.json())
    ;
  }
+
+export function getFavoriteTrackList(updateToken = true) {
+
+  let tokenObject =JSON.parse(window.localStorage.getItem("userTokens"));
+  
+  return fetch('https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/' , {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${tokenObject.access}` ,
+      },
+    })  
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json().then((responseData) => {
+          return responseData;
+        });
+      } else if (response.status === 401) {
+        if (updateToken) { 
+           refreshToken();
+           return getFavoriteTrackList(false);
+          }
+      } else {
+        throw new Error('Ошибка сервера')
+      }
+      }); 
+ }
+
+export function refreshToken() {
+
+  let tokenObject =JSON.parse(window.localStorage.getItem("userTokens"));
+
+  return fetch("https://skypro-music-api.skyeng.tech/user/token/refresh/", {
+    method: "POST",
+    body: JSON.stringify({
+      refresh: tokenObject.refresh,
+    }),
+    headers: {
+      // API требует обязательного указания заголовка content-type, так апи понимает что мы посылаем ему json строчку в теле запроса
+      "content-type": "application/json",
+    },
+  })
+  .then((response) => response.json())
+  .then((json) => {
+     const accessObject = JSON.parse(window.localStorage.getItem("userTokens"));
+     accessObject.access = json.access;
+     window.localStorage.setItem("userTokens", JSON.stringify(accessObject));
+     console.log("токен обновился");
+    
+  });
+}
+
+export function addTrackToFavorite ({id, updateToken=true}) {
+
+  let tokenObject =JSON.parse(window.localStorage.getItem("userTokens"));
+
+  return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${tokenObject.access}` ,
+    },
+  }) 
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json().then((responseData) => {
+        return responseData;
+      });
+    } else if (response.status === 401) {
+      if (updateToken) { 
+         refreshToken();
+         return addTrackToFavorite({id, updateToken: false});
+        }
+    } else {
+      throw new Error('Ошибка сервера')
+    }
+    }); 
+}
+
+export function deleteTrackFromFavorite ({id, updateToken=true}) {
+
+  let tokenObject =JSON.parse(window.localStorage.getItem("userTokens"));
+
+  return fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${tokenObject.access}` ,
+    },
+  }) 
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json().then((responseData) => {
+        return responseData;
+      });
+    } else if (response.status === 401) {
+      if (updateToken) { 
+         refreshToken();
+         return deleteTrackFromFavorite({id, updateToken: false});
+        }
+    } else {
+      throw new Error('Ошибка сервера')
+    }
+    }); 
+}

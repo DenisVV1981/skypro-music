@@ -1,13 +1,13 @@
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackStateSelector, trackToPlaySelector, tracksSelector } from '../../store/selectors/tracklist';
+import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 
 import { playTrack, pauseTrack } from '../../store/actions/creators/player';
+import { addTrackToFavorite, deleteTrackFromFavorite } from '../../api';
 
-function PlaylistContent({sceleton, handleStart, handleStop}) {
+function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback}) {
   const dispatch = useDispatch();
-  const trackList = useSelector(tracksSelector);
   const trackToPlay = useSelector(trackToPlaySelector);
   const trackIsPlaying = useSelector(trackStateSelector);
 
@@ -25,6 +25,20 @@ function PlaylistContent({sceleton, handleStart, handleStop}) {
       dispatch(playTrack(song));
     }
   };
+
+  const handleLike = (song) => {
+    return (event) => {
+      event.stopPropagation();
+      const isLike = song.stared_user?.filter(item => item.id === user.id).length > 0;
+      if(isLike || isFavorite){
+        deleteTrackFromFavorite({id: song.id}).then(() => fetchCallback());
+      } else {
+        addTrackToFavorite({id: song.id}).then(() => fetchCallback());
+      }
+    }
+  };
+
+  const user = JSON.parse(window.localStorage.getItem("user"));
 
   return (
     <S.CenterblockContent>
@@ -85,11 +99,11 @@ function PlaylistContent({sceleton, handleStart, handleStop}) {
                 <S.TrackAlbum>
                   <S.TrackAlbumLink>{song.album}</S.TrackAlbumLink>
                 </S.TrackAlbum>
-                <div>
+                <div> 
                   <S.TrackTimeSvg alt="time">
-                    <use xlinkHref ="img/icon/sprite.svg#icon-like"></use>
+                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.stared_user?.filter(item => item.id === user.id).length > 0 ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
                   </S.TrackTimeSvg>
-                  <span>{song.time}</span>
+                  <span>{Math.floor(song.duration_in_seconds / 60).toString().padStart(2, '0') + ':' + (song.duration_in_seconds % 60).toString().padStart(2, '0')}</span>
                 </div>
               </S.PlaylistTrack>
             </S.PlaylistItem>
