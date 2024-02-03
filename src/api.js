@@ -1,11 +1,18 @@
 export async function getTrackList() {
  const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/');
+ let user =JSON.parse(window.localStorage.getItem("user"));
 
   if (!response.ok){
     throw new Error('Ошибка сервера')
   }
  
-  const data = await response.json();
+  let data = await response.json();
+  data = data.map((item) => {
+    return {
+      ...item, 
+      isLike: item.stared_user?.filter(item => item.id === user.id).length > 0,
+    };
+  });
   return data;
 }
 
@@ -118,6 +125,12 @@ export function getFavoriteTrackList(updateToken = true) {
     .then((response) => {
       if (response.status === 200) {
         return response.json().then((responseData) => {
+          responseData = responseData.map((item) => {
+            return {
+              ...item, 
+              isLike: true,
+            };
+          });
           return responseData;
         });
       } else if (response.status === 401) {

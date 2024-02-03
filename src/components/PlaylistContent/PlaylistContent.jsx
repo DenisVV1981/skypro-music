@@ -28,16 +28,18 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
   const handleLike = (song) => {
     return (event) => {
       event.stopPropagation();
-      const isLike = song.stared_user?.filter(item => item.id === user.id).length > 0;
-      if(isLike || isFavorite){
+      if(song.isLike || isFavorite){
         deleteTrackFromFavorite({id: song.id}).then(() => fetchCallback());
       } else {
         addTrackToFavorite({id: song.id}).then(() => fetchCallback());
       }
+
+      if(song.id === trackToPlay?.id){
+        dispatch(playTrack(song));
+      }
+
     }
   };
-
-  const user = JSON.parse(window.localStorage.getItem("user"));
 
   return (
     <S.CenterblockContent>
@@ -100,7 +102,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
                 </S.TrackAlbum>
                 <div> 
                   <S.TrackTimeSvg alt="time">
-                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.stared_user?.filter(item => item.id === user.id).length > 0 ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
+                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.isLike ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
                   </S.TrackTimeSvg>
                   <span>{Math.floor(song.duration_in_seconds / 60).toString().padStart(2, '0') + ':' + (song.duration_in_seconds % 60).toString().padStart(2, '0')}</span>
                 </div>

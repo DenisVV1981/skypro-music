@@ -2,12 +2,13 @@ import {  useEffect } from 'react';
 import * as S from './Player.styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isShuffleOnSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
+import { isShuffleOnSelector, trackLikeSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 import { playTrack, pauseTrack, nextTrack, prevTrack, shuffleTrack } from '../../store/actions/creators/player';
 
 export default function Player({audioRef, handleStart, handleStop, toggleLoop, isLooping}) {
   const trackToPlay = useSelector(trackToPlaySelector);
   const isPlaying = useSelector(trackStateSelector);
+  const isLike = useSelector(trackLikeSelector);
   const isShuffleOn = useSelector(isShuffleOnSelector);
 
   const dispatch = useDispatch();
@@ -110,15 +111,10 @@ return (
 
                   <S.TrackPlayLikeDis>
                     <S.TrackPlayLike>
-                      <S.TrackPlayLikeSvg alt="like">
-                        <use xlinkHref ="img/icon/sprite.svg#icon-like"></use>
+                      <S.TrackPlayLikeSvg alt={isLike ? "like" : "dislike"}>
+                        <use xlinkHref ={isLike ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
                       </S.TrackPlayLikeSvg>
                     </S.TrackPlayLike>
-                    <S.TrackPlayDislike>
-                      <S.TrackPlayDislikeSvg alt="dislike">
-                        <use xlinkHref ="img/icon/sprite.svg#icon-dislike"></use>
-                      </S.TrackPlayDislikeSvg>
-                    </S.TrackPlayDislike>
                   </S.TrackPlayLikeDis>
                 </S.PlayerTrackPlay>
     </S.BarPlayer>

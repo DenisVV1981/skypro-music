@@ -211,15 +211,10 @@ align-items: center;
 margin-left: 26%;
 `
 
-
 export const TrackPlayLike = styled(PlayerButtonHoverActive)`
 padding: 5px;
 `
 
-export const TrackPlayDislike = styled(PlayerButtonHoverActive)`
-padding: 5px;
-margin-left: 28.5px;
-`
 export const TrackPlayLikeSvg = styled.svg`
 width: 14px;
 height: 12px;
