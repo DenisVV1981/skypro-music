@@ -2,12 +2,18 @@ const trackSelector = (store) => {
     const tracks = store.playlist.tracks;
     const filter = store.filter;
     // создать новый массив треков, отфильтрованный по filtr и вернуть новый массив
-    let newArrayFiltredTracks  = tracks.filter((track) => {
-        return filter.authorFilter.length === 0
+    return tracks.filter((track) => {
+        let isAuthor = filter.authorFilter.length === 0
         ? true
         : filter.authorFilter.indexOf(track.author) !== -1;
+        let isGenre = filter.genreFilter.length === 0
+        ? true
+        : filter.genreFilter.indexOf(track.genre) !== -1;
+        let isReleaseDate =  filter.releaseDateFilter.length === 0
+        ? true
+        : filter.releaseDateFilter.indexOf(track.release_date?.substring(0, 4) ?? "-") !== -1;
+        return  isAuthor && isGenre && isReleaseDate ;
     });
-    return newArrayFiltredTracks;
 };
 
 const trackErrorSelector = (store) => store.playlist.tracksError;

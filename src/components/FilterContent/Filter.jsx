@@ -12,7 +12,7 @@ export default function Filter({onClickCallback, filtername, visible, items, onF
   };
     return (
         <S.FilterButton onClick={onClickCallback}>
-            <div>{filtername}</div>
+            <div>{filtername}({selectedValues.length})</div>
         
             {visible && (
                 <S.FilterPanel>
