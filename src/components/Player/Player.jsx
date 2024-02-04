@@ -4,6 +4,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShuffleOnSelector, trackLikeSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 import { playTrack, pauseTrack, nextTrack, prevTrack, shuffleTrack } from '../../store/actions/creators/player';
+import { addTrackToFavorite, deleteTrackFromFavorite } from '../../api';
 
 export default function Player({audioRef, handleStart, handleStop, toggleLoop, isLooping}) {
   const trackToPlay = useSelector(trackToPlaySelector);
@@ -64,6 +65,17 @@ export default function Player({audioRef, handleStart, handleStop, toggleLoop, i
     dispatch(shuffleTrack());
   }
 
+  const handleLike = (song) => {
+    return (event) => {
+      event.stopPropagation();
+      if(song.isLike){
+        deleteTrackFromFavorite({id: song.id});
+      } else {
+        addTrackToFavorite({id: song.id});
+      }
+      // dispatch(changeTrackLike(!song.isLike));
+    }
+  };
 return (
     <S.BarPlayer>
                 <S.PlayerControls>
@@ -108,11 +120,11 @@ return (
                       <S.TrackPlayAlbumLink href="http://">{trackToPlay.author}</S.TrackPlayAlbumLink>
                     </S.TrackPlayAlbum>
                   </S.TrackPlayContain>
-
+  
                   <S.TrackPlayLikeDis>
                     <S.TrackPlayLike>
                       <S.TrackPlayLikeSvg alt={isLike ? "like" : "dislike"}>
-                        <use xlinkHref ={isLike ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
+                        <use onClick={handleLike(trackToPlay)} xlinkHref ={isLike ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
                       </S.TrackPlayLikeSvg>
                     </S.TrackPlayLike>
                   </S.TrackPlayLikeDis>

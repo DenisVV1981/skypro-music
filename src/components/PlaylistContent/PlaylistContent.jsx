@@ -3,7 +3,7 @@ import * as S from './PlayList.styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 
-import { playTrack, pauseTrack } from '../../store/actions/creators/player';
+import { playTrack, pauseTrack, changeTrackLike } from '../../store/actions/creators/player';
 import { addTrackToFavorite, deleteTrackFromFavorite } from '../../api';
 
 function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback}) {
@@ -35,7 +35,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
       }
 
       if(song.id === trackToPlay?.id){
-        dispatch(playTrack(song));
+        dispatch(changeTrackLike(!song.isLike));
       }
 
     }

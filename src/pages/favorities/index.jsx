@@ -30,10 +30,12 @@ const trackList = useSelector(tracksFavoriteSelector);
       }
       
     };
+
+    // const isLike = useSelector(trackLikeSelector);
     useEffect(() => {
-      
-        fetchData();
-      }, [])
+      console.log("вызвали favorite page");
+      fetchData();
+    }, [])
 
 return (
    

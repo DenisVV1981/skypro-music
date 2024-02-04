@@ -14,7 +14,7 @@ export const MainPage = ()=> {
   const [sceleton, setSceleton] = useState(true);
 
   const fetchData = async () => {
-
+console.log("вызвали fetch data");
     try {
       const tracks = await getTrackList();
       dispatch(addTracks({
@@ -28,10 +28,11 @@ export const MainPage = ()=> {
         errorMessage: "Не удалось загрузить плейлист, попробуйте позже."
       }));
     }
-    
   };
+
+  // const isLike = useSelector(trackLikeSelector);
   useEffect(() => {
-  
+    console.log("вызвали main page");
     fetchData();
   }, [])
 

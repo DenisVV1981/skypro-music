@@ -44,8 +44,25 @@ export function playerIsLikeReducer(state = initialIsLikeState, action) {
         case CHANGE_TRACK_LIKE: {
             const {isLike} = action.payload;
             return {
-                isPlaying: state.isPlaying,
                 isLike: isLike,
+            };
+        }
+        case PLAY_TRACK: {
+            const {track} = action.payload;
+            return {
+                isLike: track.isLike,
+            };
+        }
+        case NEXT_TRACK: {
+            const {track} = action.payload;
+            return {
+                isLike: track.isLike,
+            };
+        }
+        case PREV_TRACK: {
+            const {track} = action.payload;
+            return {
+                isLike: track.isLike,
             };
         }
         
