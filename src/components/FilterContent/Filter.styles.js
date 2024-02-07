@@ -41,9 +41,6 @@ border: 1px solid #ffffff;
 border-radius: 60px;
 padding: 6px 20px;
 
-  &:not(:last-child){
-    margin-right: 10px;
-  }
   &:hover{
     border-color: #d9b6ff;
     color: #d9b6ff;
@@ -55,3 +52,19 @@ padding: 6px 20px;
     cursor: pointer;
   }
 `;
+
+export const FilterCounter = styled.button`
+position: relative;
+bottom: 11px;
+border-radius: 20px;
+background-color: purple;
+right: 19px;
+width: 30px;
+height: 30px;
+`
+
+export const FilterTop = styled.div`
+display: flex
+`
+
+

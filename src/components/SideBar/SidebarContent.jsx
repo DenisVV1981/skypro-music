@@ -1,14 +1,34 @@
+import { getSelectionList, getSelectionTracks } from '../../api';
 import * as S from './SidebarContent.styles';
 import {useState, useEffect} from 'react';
 
 export default function SidebarContent() {
 
   const [sceleton, setSceleton] = useState(true);
-  useEffect(()=>{
-    setTimeout(()=>{
+
+  const fetchData = async () => {
+
+    try {
+      const selections = await getSelectionList();
+      
+      console.log(selections);
       setSceleton(false);
-    },  5000 );
-  });
+      selections.forEach(async selection => {
+        const selectionTracks  = await getSelectionTracks(selection.id);
+        console.log(selectionTracks);
+      });
+    } catch (error) {
+      console.log(error);
+      setSceleton(false);
+    }
+    
+  };
+
+  // const isLike = useSelector(trackLikeSelector);
+  useEffect(() => {
+    console.log("загрузили selections");
+    fetchData();
+  }, [])
 
     return ( <div>
 
