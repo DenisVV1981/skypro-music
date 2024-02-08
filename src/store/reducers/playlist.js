@@ -1,5 +1,6 @@
 import { CHANGE_TRACK_LIKE, NEXT_TRACK, PLAY_TRACK, PREV_TRACK, SHUFFLE_TRACK } from "../actions/types/player";
 import { ADD_FAVORITE_TRACKS, ADD_TRACKS } from "../actions/types/playlist";
+import { TRACKS_SEARCH, TRACKS_SORT } from "../actions/types/search";
 
 const initialState = {
     tracks: [],
@@ -125,7 +126,43 @@ export function playlistReducer(state = initialState, action) {
                 favoriteTracks: state.favoriteTracks,
                 favoriteTracksError: state.favoriteTracksError,
             };
-        } 
+        }
+        case TRACKS_SEARCH: {
+            let shuffleList;
+            if(state.shuffledTracks === null){
+                shuffleList = shuffle([...state.tracks]);
+            }
+            else {
+                shuffleList = null;
+            }
+
+            return {
+                tracks: state.tracks,
+                shuffledTracks: shuffleList,
+                trackToPlay: state.trackToPlay,
+                tracksError: state.tracksError,
+                favoriteTracks: state.favoriteTracks,
+                favoriteTracksError: state.favoriteTracksError,
+            };
+        }
+        // case TRACKS_SORT: {
+        //     let shuffleList;
+        //     if(state.shuffledTracks === null){
+        //         shuffleList = shuffle([...state.tracks]);
+        //     }
+        //     else {
+        //         shuffleList = null;
+        //     }
+
+        //     return {
+        //         tracks: state.tracks,
+        //         shuffledTracks: shuffleList,
+        //         trackToPlay: state.trackToPlay,
+        //         tracksError: state.tracksError,
+        //         favoriteTracks: state.favoriteTracks,
+        //         favoriteTracksError: state.favoriteTracksError,
+        //     };
+        // }
         // case CHANGE_TRACK_LIKE: {
         //     const {isLike} = action.payload;
         //     const trackToPlay = {...state.trackToPlay};

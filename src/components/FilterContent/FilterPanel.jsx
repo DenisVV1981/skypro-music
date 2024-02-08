@@ -5,6 +5,7 @@ import * as S from './FilterPanel.styles.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorFilterTrack, genreFilterTrack, releaseDateFilterTrack } from '../../store/actions/creators/filter.js';
 import { filterAvailableValuesSelector, filterSelector } from '../../store/selectors/filter.js';
+import { trackSort } from '../../store/actions/creators/search.js';
 
 
 export default function FilterPanel() {
@@ -35,6 +36,18 @@ export default function FilterPanel() {
     }
   };
 
+  // сортировка
+  const [order, setOrder] = useState(false);
+  const handleSortClick = (event) => {
+    console.log(order);
+    sortTracks(order);
+  };
+
+  const sortTracks = (ascending) => {
+    dispatch(trackSort(ascending));
+    
+  };
+
   return (
     <S.CenterblockFilter>
     <S.FilterTitle>Искать по:</S.FilterTitle>
@@ -62,6 +75,13 @@ export default function FilterPanel() {
       filtername="жанру" 
       selectedValues={storeFilter.genreFilter}
       items={storeFilterAvailableValues.genres}></Filter>
+
+      <input
+        type="checkbox" 
+        onClick={handleSortClick} 
+        checked={order} onInput={e => setOrder(!e.target.checked)} />
+        {order && (<span>Сначала новые</span>)}
+        {!order && (<span>Сначала старые</span>)}
   </S.CenterblockFilter>
 );
 
