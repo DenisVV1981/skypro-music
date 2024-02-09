@@ -53,7 +53,12 @@ display: flex;
 -ms-flex-direction: column;
 flex-direction: column;
 overflow-y: auto;
-height: 450px;
+::-webkit-scrollbar {
+  display: none;
+}
+height: 530px;
+width: max-content;
+
 `
 export const PlaylistItem = styled.div`
 width: 100%;

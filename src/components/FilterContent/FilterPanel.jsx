@@ -50,38 +50,53 @@ export default function FilterPanel() {
 
   return (
     <S.CenterblockFilter>
-    <S.FilterTitle>Искать по:</S.FilterTitle>
+      <S.FilterTitleLeft>
+        
+        <S.FilterTitle>Искать по: </S.FilterTitle>
 
-    <Filter 
-      onFilterSelected={(filterItem) => filterSelected("author", filterItem)}
-      onClickCallback={() => toggleVisibility("author")} 
-      visible={visibleFilter === "author"}
-      filtername="исполнителю" 
-      selectedValues={storeFilter.authorFilter}
-      items={storeFilterAvailableValues.authors}></Filter>
+        <Filter 
+          onFilterSelected={(filterItem) => filterSelected("author", filterItem)}
+          onClickCallback={() => toggleVisibility("author")} 
+          visible={visibleFilter === "author"}
+          filtername="исполнителю" 
+          selectedValues={storeFilter.authorFilter}
+          items={storeFilterAvailableValues.authors}>
+        </Filter>
+          
+        <Filter
+          onFilterSelected={(filterItem) => filterSelected("genre", filterItem)}
+          onClickCallback={() => toggleVisibility("genre")} 
+          visible={visibleFilter === "genre"}
+          filtername="жанру" 
+          selectedValues={storeFilter.genreFilter}
+          items={storeFilterAvailableValues.genres}>
+        </Filter>
 
-    <Filter
-      onFilterSelected={(filterItem) => filterSelected("year", filterItem)}
-      onClickCallback={() => toggleVisibility("year")} 
-      visible={visibleFilter === "year"}
-      filtername="году выпуска" 
-      selectedValues={storeFilter.releaseDateFilter}
-      items={storeFilterAvailableValues.releaseYears}></Filter>
+      </S.FilterTitleLeft>
+    
+      <S.FilterTitleRight>
 
-    <Filter
-      onFilterSelected={(filterItem) => filterSelected("genre", filterItem)}
-      onClickCallback={() => toggleVisibility("genre")} 
-      visible={visibleFilter === "genre"}
-      filtername="жанру" 
-      selectedValues={storeFilter.genreFilter}
-      items={storeFilterAvailableValues.genres}></Filter>
+        
+      <S.FilterTitle>Сортировка: </S.FilterTitle>
+        <Filter
+          onFilterSelected={(filterItem) => filterSelected("year", filterItem)}
+          onClickCallback={() => toggleVisibility("year")} 
+          visible={visibleFilter === "year"}
+          filtername="По умолчанию" 
+          selectedValues={storeFilter.releaseDateFilter}
+          items={storeFilterAvailableValues.releaseYears}></Filter>
 
-      <input
-        type="checkbox" 
-        onClick={handleSortClick} 
-        checked={order} onInput={e => setOrder(!e.target.checked)} />
-        {order && (<span>Сначала новые</span>)}
+        {/* <input
+          type="checkbox" 
+          onClick={handleSortClick} 
+          checked={order} onInput={e => setOrder(!e.target.checked)} /> */}
+
+        {/* {order && (<span>Сначала новые</span>)}
         {!order && (<span>Сначала старые</span>)}
+       */}
+      </S.FilterTitleRight>
+ 
+      
   </S.CenterblockFilter>
 );
 

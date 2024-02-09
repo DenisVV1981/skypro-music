@@ -26,7 +26,7 @@ export default function Filter({onClickCallback, filtername, visible, items, onF
                 )}
             </S.FilterButton>
             { selectedValues.length > 0 &&(<S.FilterCounter>{selectedValues.length}</S.FilterCounter>)} 
-            { !selectedValues.length  &&(<div style={{width: `30px`}}></div>)} 
+            {/* { !selectedValues.length  &&(<div style={{width: `30px`}}></div>)}  */}
         </S.FilterTop>
     );
 };

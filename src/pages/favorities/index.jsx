@@ -42,7 +42,6 @@ return (
 <S.MainBlock>
     <S.MainCenter>
         <S.CenterblockH2>Мои треки</S.CenterblockH2>
-        <FilterPanel/>
         <PlaylistContent fetchCallback={fetchData} isFavorite={true} trackList = {trackList} sceleton={sceleton}/>
     </S.MainCenter>
 </S.MainBlock>

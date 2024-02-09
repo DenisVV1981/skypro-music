@@ -23,7 +23,7 @@ const toggleVisibility = () => {setVisible(!visible);};
                       <S.MenuLink to="/" >Главное</S.MenuLink>
                     </S.MenuItem>
                     <S.MenuItem >
-                      <S.MenuLink to="/favorities" >Мой плейлист</S.MenuLink>
+                      <S.MenuLink to="/favorities" >Мои треки</S.MenuLink>
                     </S.MenuItem>
                     <S.MenuItem >
                       <S.MenuLink to="/login" onClick={logout}>{ "Выйти"}</S.MenuLink>

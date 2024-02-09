@@ -33,6 +33,7 @@ padding-right: 24px;
 `
 
 export const FilterButton = styled.div`
+position: relative;
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -51,20 +52,24 @@ padding: 6px 20px;
     color: #ad61ff;
     cursor: pointer;
   }
-`;
+`
 
-export const FilterCounter = styled.button`
-position: relative;
-bottom: 11px;
+export const FilterCounter = styled.div`
+position: absolute;
+right: -8px;
+top: -8px;
 border-radius: 20px;
-background-color: purple;
-right: 19px;
+background-color: rgb(173, 97, 255);
 width: 30px;
 height: 30px;
+align-items: center;
+justify-content: center;
+display: flex;
+}
 `
 
 export const FilterTop = styled.div`
-display: flex
-`
+position: relative;
 
+`
 

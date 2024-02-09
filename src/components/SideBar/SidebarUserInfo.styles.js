@@ -16,6 +16,7 @@ align-items: center;
 -ms-flex-pack: end;
 justify-content: flex-end;
 padding: 12px 0 15px 0;
+margin-right: 120px;
 `
 
 export const SidebarPersonalName = styled.p`
