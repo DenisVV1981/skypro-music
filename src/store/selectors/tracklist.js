@@ -97,7 +97,5 @@ export const trackToPlaySelector = (store) => {
 
 export const trackStateSelector  = (store) => store.player.isPlaying;
 
-export const trackLikeSelector  = (store) => store.playerIsLike.isLike;
-
 export const isShuffleOnSelector  = (store) => store.playlist.shuffledTracks !== null;
 

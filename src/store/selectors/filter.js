@@ -16,7 +16,5 @@ function onlyUnique(value, index, array) {
 
 export const isFilterOn = (store) => {
     return {
-
-        
     }
 }

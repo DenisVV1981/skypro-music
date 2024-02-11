@@ -15,7 +15,7 @@ export default function Volume({audioRef}) {
       <S.VolumeContent> 
           <S.VolumeImg >
                 <S.VolumeSvg alt="volume">
-                      <use xlinkHref ="img/icon/sprite.svg#icon-volume"></use>
+                      <use xlinkHref ="/img/icon/sprite.svg#icon-volume"></use>
                 </S.VolumeSvg>
             </S.VolumeImg>
             <S.VoluneProgress>

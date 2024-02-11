@@ -4,9 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
 
 import { playTrack, pauseTrack, changeTrackLike } from '../../store/actions/creators/player';
-import { addTrackToFavorite, deleteTrackFromFavorite } from '../../api';
+import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from '../../services/playerAPI';
 
-function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback}) {
+function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false}) {
+ 
+  
+  const [addFavoriteTrack, { isLoading: addIsLoading  }] = useAddFavoriteTrackMutation();
+  const [deleteFavoriteTrack, { isLoading: deleteIsLoading }] = useDeleteFavoriteTrackMutation();
+
   const dispatch = useDispatch();
   const trackToPlay = useSelector(trackToPlaySelector);
   const trackIsPlaying = useSelector(trackStateSelector);
@@ -23,17 +28,18 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
     else{
       dispatch(playTrack(song));
     }
+    dispatch(changeTrackLike(song.isLike));
   };
 
   const handleLike = (song) => {
     return (event) => {
       event.stopPropagation();
+      console.log(song);
       if(song.isLike || isFavorite){
-        deleteTrackFromFavorite({id: song.id}).then(() => fetchCallback());
+        deleteFavoriteTrack(song.id);
       } else {
-        addTrackToFavorite({id: song.id}).then(() => fetchCallback());
+        addFavoriteTrack(song.id);
       }
-
       if(song.id === trackToPlay?.id){
         dispatch(changeTrackLike(!song.isLike));
       }
@@ -49,7 +55,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
         <S.PlaylistTitleCol $width='245'>АЛЬБОМ</S.PlaylistTitleCol>
         <S.PlaylistTitleCol $width='60' $extrastyle="text-align: end;">
           <S.PlaylistTitleSvg alt="time">
-            <use xlinkHref ="img/icon/sprite.svg#icon-watch"></use>
+            <use xlinkHref ="/img/icon/sprite.svg#icon-watch"></use>
           </S.PlaylistTitleSvg>
         </S.PlaylistTitleCol>
       </S.ContentTitle>
@@ -66,13 +72,17 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
         </S.ContentPlayList>
       )}
       
-      {!sceleton && trackList.errorMessage && (
-        <div>{trackList.errorMessage}</div>
+      {!sceleton && errorMessage && (
+        <div>{errorMessage}</div>
       )}
+      {!sceleton && trackList?.length===0 &&(
+        <div>
 
-      {!sceleton && trackList.list && (
+        <h2>В этом плейлисте нет треков</h2></div>
+      )}
+      {!sceleton && trackList && (
         <S.ContentPlayList>
-          {trackList.list.map((song) => {
+          {trackList.map((song) => {
             return <S.PlaylistItem onClick={()=>{handleTrackClick(song)}} key={song.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>
@@ -80,7 +90,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
 
                     { song.id !== trackToPlay?.id && (
                     <S.TrackTitleSvg alt="music">
-                      <use xlinkHref ="img/icon/sprite.svg#icon-note"></use>
+                      <use xlinkHref ="/img/icon/sprite.svg#icon-note"></use>
                     </S.TrackTitleSvg>)}
 
                     { song.id === trackToPlay?.id && trackIsPlaying && (<S.TrackTitlePlaySvg alt="music"/>)}
@@ -102,7 +112,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
                 </S.TrackAlbum>
                 <div> 
                   <S.TrackTimeSvg alt="time">
-                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.isLike ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
+                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.isLike ? "/img/icon/sprite.svg#icon-like" : "/img/icon/sprite.svg#icon-dislike" }></use>
                   </S.TrackTimeSvg>
                   <span>{Math.floor(song.duration_in_seconds / 60).toString().padStart(2, '0') + ':' + (song.duration_in_seconds % 60).toString().padStart(2, '0')}</span>
                 </div>

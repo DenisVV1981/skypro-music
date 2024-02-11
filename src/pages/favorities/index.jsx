@@ -1,49 +1,21 @@
 import * as S from '../../App.styles';
-import React, {useEffect, useState}  from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import FilterPanel from '../../components/FilterContent/FilterPanel';
 import PlaylistContent from '../../components/PlaylistContent/PlaylistContent';
-import { getFavoriteTrackList } from '../../api';
-import { addFavoriteTracks } from '../../store/actions/creators/playlist';
-import { tracksFavoriteSelector } from '../../store/selectors/tracklist';
+import { useGetFavoriteTracksQuery } from '../../services/playerAPI.js';
+
+
 
 export const Favorities = ()=> {
-const dispatch = useDispatch();
-const [sceleton, setSceleton] = useState(true);
+  const {data, error, isLoading} = useGetFavoriteTracksQuery();
 
-const trackList = useSelector(tracksFavoriteSelector);
-
-    const fetchData = async () => {
-
-      try {
-        const tracks = await getFavoriteTrackList();
-        dispatch(addFavoriteTracks({
-          list: tracks
-        }));
-        setSceleton(false);
-      } catch (error) {
-        console.log(error);
-        setSceleton(false);
-        dispatch(addFavoriteTracks({
-          errorMessage: "Не удалось загрузить плейлист, попробуйте позже."
-        }));
-      }
-      
-    };
-
-    // const isLike = useSelector(trackLikeSelector);
-    useEffect(() => {
-      console.log("вызвали favorite page");
-      fetchData();
-    }, [])
-
-return (
+  return (
    
-<S.MainBlock>
+  <S.MainBlock>
     <S.MainCenter>
-        <S.CenterblockH2>Мои треки</S.CenterblockH2>
-        <PlaylistContent fetchCallback={fetchData} isFavorite={true} trackList = {trackList} sceleton={sceleton}/>
+      <S.CenterblockH2>Мои треки</S.CenterblockH2>
+      <PlaylistContent isFavorite={true} trackList={data} sceleton={isLoading} errorMessage={error}/>
     </S.MainCenter>
-</S.MainBlock>
+      <S.MainSidebar>
+      </S.MainSidebar>
+  </S.MainBlock>
 );
 };

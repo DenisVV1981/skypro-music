@@ -1,38 +1,13 @@
-import { getSelectionList, getSelectionTracks } from '../../api';
+import { useGetMainTracksQuery } from '../../services/playerAPI';
 import * as S from './SidebarContent.styles';
-import {useState, useEffect} from 'react';
 
 export default function SidebarContent() {
 
-  const [sceleton, setSceleton] = useState(true);
-
-  const fetchData = async () => {
-
-    try {
-      const selections = await getSelectionList();
-      
-      console.log(selections);
-      setSceleton(false);
-      selections.forEach(async selection => {
-        const selectionTracks  = await getSelectionTracks(selection.id);
-        console.log(selectionTracks);
-      });
-    } catch (error) {
-      console.log(error);
-      setSceleton(false);
-    }
-    
-  };
-
-  // const isLike = useSelector(trackLikeSelector);
-  useEffect(() => {
-    console.log("загрузили selections");
-    fetchData();
-  }, [])
+  const { isLoading} = useGetMainTracksQuery();
 
     return ( <div>
 
-{sceleton && (
+{isLoading && (
         <S.SidebarBlock>
           <S.SideBarList>
             <S.SidebarItemSceleton>
@@ -45,7 +20,7 @@ export default function SidebarContent() {
         </S.SidebarBlock>   
       )}
 
-      {!sceleton && (
+      {!isLoading && (
             <S.SidebarBlock>
               <S.SideBarList>
                 <S.SidebarItem>

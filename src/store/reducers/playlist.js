@@ -1,4 +1,4 @@
-import { CHANGE_TRACK_LIKE, NEXT_TRACK, PLAY_TRACK, PREV_TRACK, SHUFFLE_TRACK } from "../actions/types/player";
+import { NEXT_TRACK, PLAY_TRACK, PREV_TRACK, SHUFFLE_TRACK } from "../actions/types/player";
 import { ADD_FAVORITE_TRACKS, ADD_TRACKS } from "../actions/types/playlist";
 import { TRACKS_SEARCH, TRACKS_SORT } from "../actions/types/search";
 
