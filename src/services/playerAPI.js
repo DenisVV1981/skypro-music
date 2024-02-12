@@ -14,8 +14,8 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       if (token) {
         headers.set('authorization', `Bearer ${token}`)
       }
-
-      return headers
+      headers.set('accept', `application/json`)
+      return headers;
     },
   })
 
@@ -55,17 +55,18 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     extraOptions,
   )
 
-  console.debug('Результат запроса на обновление токена', { refreshResult })
+  console.error('Результат запроса на обновление токена', { refreshResult })
 
   if (!refreshResult.data.access) {
     return forceLogout()
   }
 
-  api.dispatch(refreshToken({ access: refreshResult.data.access }))
+  api.dispatch(refreshToken(refreshResult.data.access))
 
   const retryResult = await baseQuery(args, api, extraOptions)
 
   if (retryResult?.error?.status === 401) {
+    console.error("получили 401 повторно");
     return forceLogout()
   }
 

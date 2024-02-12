@@ -12,7 +12,6 @@ export function newUserRegistration({email, password, username, callbackForRespo
     },
   })
     .then((response) => {
-      console.log(response);
       if (response.status === 201) {
         response.json().then((responseData) => {
           callbackForResponse({

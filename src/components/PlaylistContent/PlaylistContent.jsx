@@ -1,7 +1,7 @@
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
+import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/player';
 
 import { playTrack, pauseTrack, changeTrackLike } from '../../store/actions/creators/player';
 import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from '../../services/playerAPI';
@@ -33,7 +33,6 @@ function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false})
     });
 
     // сортировка
-    console.log(filter.releaseDateOrder);
     if(filter.releaseDateOrder !== null && filter.releaseDateOrder !== "По умолчанию"){
         const direction = filter.releaseDateOrder === "Сначала старые" ? 1 : -1;
         tracks = tracks.sort((a, b) => (a.release_date > b.release_date) ? direction : -1*direction)
@@ -41,7 +40,7 @@ function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false})
 
     return tracks;
   };
-  trackList = trackSelector(trackList, storeFilter, storeSearch);
+  const filteredTrackList = trackSelector(trackList, storeFilter, storeSearch);
   
   const [addFavoriteTrack, { isLoading: addIsLoading  }] = useAddFavoriteTrackMutation();
   const [deleteFavoriteTrack, { isLoading: deleteIsLoading }] = useDeleteFavoriteTrackMutation();
@@ -56,11 +55,11 @@ function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false})
       if (trackIsPlaying) {
         dispatch(pauseTrack(song));
       } else {
-        dispatch(playTrack(song));
+        dispatch(playTrack(song, trackList));
       }
     }
     else{
-      dispatch(playTrack(song));
+      dispatch(playTrack(song, trackList));
     }
     dispatch(changeTrackLike(song.isLike));
   };
@@ -68,7 +67,6 @@ function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false})
   const handleLike = (song) => {
     return (event) => {
       event.stopPropagation();
-      console.log(song);
       if(song.isLike || isFavorite){
         deleteFavoriteTrack(song.id);
       } else {
@@ -109,14 +107,14 @@ function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false})
       {!sceleton && errorMessage && (
         <div>{errorMessage}</div>
       )}
-      {!sceleton && trackList?.length===0 &&(
+      {!sceleton && filteredTrackList?.length===0 &&(
         <div>
 
         <h2>В этом плейлисте нет треков</h2></div>
       )}
-      {!sceleton && trackList && (
+      {!sceleton && filteredTrackList && (
         <S.ContentPlayList>
-          {trackList.map((song) => {
+          {filteredTrackList.map((song) => {
             return <S.PlaylistItem onClick={()=>{handleTrackClick(song)}} key={song.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>

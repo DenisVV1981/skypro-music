@@ -2,7 +2,6 @@ import * as S from './ProgressPlayerBar.styles'
 
 export default function ProgressBar({audioRef, currentTime, changeCurrentTime}) {
   const duration = isNaN(audioRef.current?.duration ?? 0) ? 0 : audioRef.current?.duration;
-  //console.log(audioRef.current?.duration);
     return ( audioRef.current &&
       <S.ProgressInput
         type="range"

@@ -1,9 +1,9 @@
 import { PLAY_TRACK, PAUSE_TRACK, NEXT_TRACK, PREV_TRACK, SHUFFLE_TRACK, CHANGE_TRACK_LIKE  } from "../types/player.js";
 
 
- export const playTrack = (track) => ({
+ export const playTrack = (track, tracks) => ({
     type: PLAY_TRACK,
-    payload: {track},
+    payload: {track, tracks},
  });
  
  export const pauseTrack = (track) => ({

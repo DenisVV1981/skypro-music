@@ -6,7 +6,7 @@ import MainNavigation from '../Navigation/MainNavigation.jsx';
 import ProgressBar from '../ProgressPlayerBar/ProgressPlayerBar.jsx';
 import Player from '../Player/Player.jsx';
 import Volume from '../Volume/Volume.jsx';
-import { trackToPlaySelector } from "../../store/selectors/tracklist.js";
+import { trackToPlaySelector } from "../../store/selectors/player.js";
 import SearchContent from "../SearchContent/SearchContent.jsx";
 import SidebarUserInfo from "../SideBar/SidebarUserInfo.jsx";
 

@@ -2,12 +2,13 @@ import {  useEffect } from 'react';
 import * as S from './Player.styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isShuffleOnSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
+import { isShuffleOnSelector, trackStateSelector, trackToPlaySelector } from '../../store/selectors/player';
 import { playTrack, pauseTrack, nextTrack, prevTrack, shuffleTrack, changeTrackLike } from '../../store/actions/creators/player';
 import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from '../../services/playerAPI';
 
 export default function Player({audioRef, handleStart, handleStop, toggleLoop, isLooping}) {
   const trackToPlay = useSelector(trackToPlaySelector);
+  const tracks = useSelector(store => store.player.tracks);
   const isPlaying = useSelector(trackStateSelector);
   const isLike = useSelector((store) => store.player.isLike);
   const isShuffleOn = useSelector(isShuffleOnSelector);
@@ -17,7 +18,7 @@ export default function Player({audioRef, handleStart, handleStop, toggleLoop, i
   const dispatch = useDispatch();
 
   const loadedHandleStart = () => {
-    dispatch(playTrack(trackToPlay));
+    dispatch(playTrack(trackToPlay, tracks));
     handleStart();
   };
 
@@ -25,7 +26,6 @@ export default function Player({audioRef, handleStart, handleStop, toggleLoop, i
     if(!isLooping){
       handleStop();
       dispatch(nextTrack(trackToPlay));
-      console.log("has ended");
     }
   };
 
@@ -48,7 +48,7 @@ export default function Player({audioRef, handleStart, handleStop, toggleLoop, i
       dispatch(pauseTrack(trackToPlay));
     } else {
       handleStart();
-      dispatch(playTrack(trackToPlay));
+      dispatch(playTrack(trackToPlay, tracks));
     }
   };
   
@@ -69,8 +69,6 @@ export default function Player({audioRef, handleStart, handleStop, toggleLoop, i
 
   const handleLike = (event) => {
       event.stopPropagation();
-      console.log("isLike:" + isLike);
-      console.log(trackToPlay);
       if(isLike){
         deleteFavoriteTrack(trackToPlay.id);
       } else {
