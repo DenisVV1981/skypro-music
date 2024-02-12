@@ -4,18 +4,26 @@ import {useState} from 'react';
 import * as S from './FilterPanel.styles.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorFilterTrack, genreFilterTrack, releaseDateFilterTrack } from '../../store/actions/creators/filter.js';
-import { filterAvailableValuesSelector, filterSelector } from '../../store/selectors/filter.js';
-import { trackSort } from '../../store/actions/creators/search.js';
-
+import { useGetMainTracksQuery } from '../../services/playerAPI.js';
 
 export default function FilterPanel() {
-  const storeFilter = useSelector(filterSelector);
-  const storeFilterAvailableValues = useSelector(filterAvailableValuesSelector);
+
+  function onlyUnique(value, index, array) {
+      return array.indexOf(value) === index;
+  };
+
+  const {data} = useGetMainTracksQuery();
+
+  const storeFilter = useSelector((store) => store.filter);
+  const storeFilterAvailableValues = useSelector(() => {
+    return {
+        genres: data?.map((track) => track.genre).filter(onlyUnique).sort(),
+        authors: data?.map((track) => track.author).filter(onlyUnique).sort(),
+    };
+  });
 
   const dispatch = useDispatch();
-
   const [visibleFilter, setVisible] = useState(null);
-  
   const toggleVisibility = (value) => {
     if(value === visibleFilter){
       setVisible(null);
@@ -34,18 +42,6 @@ export default function FilterPanel() {
     } else  {
       dispatch(genreFilterTrack(filterValue));
     }
-  };
-
-  // сортировка
-  const [order, setOrder] = useState(false);
-  const handleSortClick = (event) => {
-    console.log(order);
-    sortTracks(order);
-  };
-
-  const sortTracks = (ascending) => {
-    dispatch(trackSort(ascending));
-    
   };
 
   return (
@@ -83,17 +79,8 @@ export default function FilterPanel() {
           onClickCallback={() => toggleVisibility("year")} 
           visible={visibleFilter === "year"}
           filtername="По умолчанию" 
-          selectedValues={storeFilter.releaseDateFilter}
-          items={storeFilterAvailableValues.releaseYears}></Filter>
-
-        {/* <input
-          type="checkbox" 
-          onClick={handleSortClick} 
-          checked={order} onInput={e => setOrder(!e.target.checked)} /> */}
-
-        {/* {order && (<span>Сначала новые</span>)}
-        {!order && (<span>Сначала старые</span>)}
-       */}
+          selectedValues={storeFilter.releaseDateOrder === null ? [] : [storeFilter.releaseDateOrder]}
+          items={["По умолчанию", "Сначала старые", "Сначала новые"]}></Filter>
       </S.FilterTitleRight>
  
       

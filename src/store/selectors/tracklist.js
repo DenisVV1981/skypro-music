@@ -10,9 +10,9 @@ const trackSelector = (store) => {
         let isGenre = filter.genreFilter.length === 0
         ? true
         : filter.genreFilter.indexOf(track.genre) !== -1;
-        let isReleaseDate =  filter.releaseDateFilter.length === 0
+        let isReleaseDate =  filter.releaseDateOrder.length === 0
         ? true
-        : filter.releaseDateFilter.indexOf(track.release_date?.substring(0, 4) ?? "-") !== -1;
+        : filter.releaseDateOrder.indexOf(track.release_date?.substring(0, 4) ?? "-") !== -1;
         let isSearchMatching =  search.searchPattern === ""
         ? true
         : track.name.toUpperCase().includes(search.searchPattern.toUpperCase());

@@ -8,6 +8,40 @@ import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from '../
 
 function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false}) {
  
+  const storeFilter = useSelector((store) => store.filter);
+  const storeSearch = useSelector((store) => store.search);
+
+  const trackSelector = (tracks, filter, search) => {
+
+    // создать новый массив треков, отфильтрованный по filtr и вернуть новый массив
+    if(!tracks){
+      return tracks;
+    }
+    tracks = tracks.filter((track) => {
+        let isAuthor = filter.authorFilter.length === 0
+        ? true
+        : filter.authorFilter.indexOf(track.author) !== -1;
+        let isGenre = filter.genreFilter.length === 0
+        ? true
+        : filter.genreFilter.indexOf(track.genre) !== -1;
+        
+        let isSearchMatching =  search.searchPattern === ""
+        ? true
+        : track.name.toUpperCase().includes(search.searchPattern.toUpperCase());
+
+        return  isAuthor && isGenre && isSearchMatching;
+    });
+
+    // сортировка
+    console.log(filter.releaseDateOrder);
+    if(filter.releaseDateOrder !== null && filter.releaseDateOrder !== "По умолчанию"){
+        const direction = filter.releaseDateOrder === "Сначала старые" ? 1 : -1;
+        tracks = tracks.sort((a, b) => (a.release_date > b.release_date) ? direction : -1*direction)
+    }
+
+    return tracks;
+  };
+  trackList = trackSelector(trackList, storeFilter, storeSearch);
   
   const [addFavoriteTrack, { isLoading: addIsLoading  }] = useAddFavoriteTrackMutation();
   const [deleteFavoriteTrack, { isLoading: deleteIsLoading }] = useDeleteFavoriteTrackMutation();

@@ -8,9 +8,7 @@ export default function SearchContent() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
       searchTracks(value);
-    }
   };
 
   const searchTracks = (pattern) => {

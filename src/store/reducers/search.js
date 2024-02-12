@@ -1,5 +1,5 @@
 
-import {TRACKS_SEARCH, TRACKS_SORT} from '../actions/types/search.js';
+import {TRACKS_SEARCH} from '../actions/types/search.js';
 
 const initialState = {
     searchPattern: "",
@@ -16,14 +16,6 @@ export function searchReducer(state = initialState, action) {
                 sortOrder: state.sortOrder,    
             };
         }
-        case TRACKS_SORT: {
-            const {ascending} = action.payload;
-            return {
-                searchPattern: state.searchPattern, 
-                sortOrder: ascending,    
-            };
-        }
-        
         default: 
             return state;
     };

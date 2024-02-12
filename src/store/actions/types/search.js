@@ -1,2 +1,1 @@
 export const TRACKS_SEARCH= 'TRACKS_SEARCH';
-export const TRACKS_SORT= 'TRACKS_SORT';

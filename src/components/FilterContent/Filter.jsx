@@ -6,8 +6,8 @@ export default function Filter({onClickCallback, filtername, visible, items, onF
 
   const handleItemClick = (filterValue) => {
     return (event) => {
-        onFilterSelected(filterValue);
         event.stopPropagation();
+        onFilterSelected(filterValue);
     }
   };
     return (
@@ -17,11 +17,9 @@ export default function Filter({onClickCallback, filtername, visible, items, onF
             
                 {visible && (
                     <S.FilterPanel>
-                        <div>
                         <S.FilterList>
                             {items.map((item)=>{ return <li id={item} style={selectedValues.indexOf(item) === -1 ? {} : {color: "purple"}}  onClick={handleItemClick(item)}> {item} </li> } )}
                         </S.FilterList>
-                        </div>
                     </S.FilterPanel>
                 )}
             </S.FilterButton>
