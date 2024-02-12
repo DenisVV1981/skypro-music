@@ -27,9 +27,13 @@ justify-content: center;
 align-items: flex-start;
 gap: 28px;
 overflow-y: auto;
-height: 150px;
+width: 170px;
+height: 161px;
 display: grid;
 padding-right: 24px;
+::-webkit-scrollbar {
+  display: none;
+}
 `
 
 export const FilterButton = styled.div`

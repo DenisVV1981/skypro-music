@@ -18,7 +18,7 @@ export default function Filter({onClickCallback, filtername, visible, items, onF
                 {visible && (
                     <S.FilterPanel>
                         <S.FilterList>
-                            {items.map((item)=>{ return <li id={item} style={selectedValues.indexOf(item) === -1 ? {} : {color: "purple"}}  onClick={handleItemClick(item)}> {item} </li> } )}
+                            {items.map((item)=>{ return <li id={item} style={selectedValues.indexOf(item) === -1 ? {} : {color: "rgb(182, 114, 255)"}}  onClick={handleItemClick(item)}> {item} </li> } )}
                         </S.FilterList>
                     </S.FilterPanel>
                 )}

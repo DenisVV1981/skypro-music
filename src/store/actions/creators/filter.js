@@ -12,6 +12,6 @@ export const genreFilterTrack = (filterValue) => ({
 
  export const releaseDateFilterTrack = (filterValue) => ({
    type: RELEASE_DATE_FILTER_TRACK,
-   payload: {releaseDateValue: filterValue},
+   payload: {releaseDateOrder: filterValue},
  }); 
  

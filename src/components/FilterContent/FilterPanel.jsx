@@ -78,8 +78,8 @@ export default function FilterPanel() {
           onFilterSelected={(filterItem) => filterSelected("year", filterItem)}
           onClickCallback={() => toggleVisibility("year")} 
           visible={visibleFilter === "year"}
-          filtername="По умолчанию" 
-          selectedValues={storeFilter.releaseDateOrder === null ? [] : [storeFilter.releaseDateOrder]}
+          filtername={storeFilter.releaseDateOrder} 
+          selectedValues={storeFilter.releaseDateOrder === "По умолчанию" ? [] : [storeFilter.releaseDateOrder]}
           items={["По умолчанию", "Сначала старые", "Сначала новые"]}></Filter>
       </S.FilterTitleRight>
  

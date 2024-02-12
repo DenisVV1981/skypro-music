@@ -3,7 +3,7 @@ import { AUTHOR_FILTER_TRACK, GENRE_FILTER_TRACK, RELEASE_DATE_FILTER_TRACK } fr
 const initialState = {
     genreFilter: [],
     authorFilter: [],
-    releaseDateOrder:  null,
+    releaseDateOrder:  "По умолчанию",
 };
 
 export function filterReducer(state = initialState, action) {
@@ -42,14 +42,12 @@ export function filterReducer(state = initialState, action) {
             };
         }
         case RELEASE_DATE_FILTER_TRACK: {
-            const {releaseDateValue} = action.payload;
-
-            const newValue = releaseDateValue === "По умолчанию" ? null : releaseDateValue;
+            const {releaseDateOrder} = action.payload;
 
             return {
                 genreFilter: state.genreFilter,
                 authorFilter: state.authorFilter,
-                releaseDateOrder: newValue,
+                releaseDateOrder: releaseDateOrder,
             };
         }
         
