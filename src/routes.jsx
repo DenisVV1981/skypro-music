@@ -7,9 +7,11 @@ import { NotFound } from './pages/404';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { UserContext } from './components/Context/Context';
 import { Dashboard } from './components/Dashboard/Dashboard';
+import { useDispatch } from 'react-redux';
+import { addUserInfo } from './store/actions/creators/api';
 
 export const AppRoutes = ({ setUser }) => {
-   
+    const dispatch = useDispatch();
     const navigate = useNavigate();
  
     const handleRedirectToRegister = () => {
@@ -25,13 +27,12 @@ export const AppRoutes = ({ setUser }) => {
     };
 
     const handleSetTokens = (userData, newTokens)=>{
-        console.log(userData);
-        console.log(newTokens);
-
+        dispatch(addUserInfo(userData, newTokens));
         
         window.localStorage.setItem("user",JSON.stringify(userData));
         window.localStorage.setItem("userTokens",JSON.stringify(newTokens));
         setUser( JSON.parse(window.localStorage.getItem("user")));
+
         navigate("/", {replace: true}); 
     };
  

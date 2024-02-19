@@ -48,7 +48,6 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
           password
         })
         .then((tokens) => {
-          console.log(tokens);
           setTokensCallback(data.data, tokens);
         });
 
@@ -100,7 +99,6 @@ export const AuthPage = ({ isLoginMode = false , redirectToRegister, setTokensCa
           password
         })
         .then((tokens) => {
-          console.log(tokens);
           setTokensCallback(data.data, tokens);
         });
       }

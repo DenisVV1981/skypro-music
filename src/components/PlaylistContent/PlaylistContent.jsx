@@ -1,12 +1,50 @@
 import PlaylistSceletonRow from './PlaylistSceletonRow';
 import * as S from './PlayList.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/tracklist';
+import { trackStateSelector, trackToPlaySelector } from '../../store/selectors/player';
 
-import { playTrack, pauseTrack } from '../../store/actions/creators/player';
-import { addTrackToFavorite, deleteTrackFromFavorite } from '../../api';
+import { playTrack, pauseTrack, changeTrackLike } from '../../store/actions/creators/player';
+import { useAddFavoriteTrackMutation, useDeleteFavoriteTrackMutation } from '../../services/playerAPI';
 
-function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback}) {
+function PlaylistContent({sceleton, trackList, errorMessage,  isFavorite=false}) {
+ 
+  const storeFilter = useSelector((store) => store.filter);
+  const storeSearch = useSelector((store) => store.search);
+
+  const trackSelector = (tracks, filter, search) => {
+
+    // создать новый массив треков, отфильтрованный по filtr и вернуть новый массив
+    if(!tracks){
+      return tracks;
+    }
+    tracks = tracks.filter((track) => {
+        let isAuthor = filter.authorFilter.length === 0
+        ? true
+        : filter.authorFilter.indexOf(track.author) !== -1;
+        let isGenre = filter.genreFilter.length === 0
+        ? true
+        : filter.genreFilter.indexOf(track.genre) !== -1;
+        
+        let isSearchMatching =  search.searchPattern === ""
+        ? true
+        : track.name.toUpperCase().includes(search.searchPattern.toUpperCase());
+
+        return  isAuthor && isGenre && isSearchMatching;
+    });
+
+    // сортировка
+    if(filter.releaseDateOrder !== null && filter.releaseDateOrder !== "По умолчанию"){
+        const direction = filter.releaseDateOrder === "Сначала старые" ? 1 : -1;
+        tracks = tracks.sort((a, b) => (a.release_date > b.release_date) ? direction : -1*direction)
+    }
+
+    return tracks;
+  };
+  const filteredTrackList = trackSelector(trackList, storeFilter, storeSearch);
+  
+  const [addFavoriteTrack, { isLoading: addIsLoading  }] = useAddFavoriteTrackMutation();
+  const [deleteFavoriteTrack, { isLoading: deleteIsLoading }] = useDeleteFavoriteTrackMutation();
+
   const dispatch = useDispatch();
   const trackToPlay = useSelector(trackToPlaySelector);
   const trackIsPlaying = useSelector(trackStateSelector);
@@ -16,29 +54,30 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
     if(song.id === trackToPlay?.id){
       if (trackIsPlaying) {
         dispatch(pauseTrack(song));
-        // handleStop();
       } else {
-        dispatch(playTrack(song));
+        dispatch(playTrack(song, trackList));
       }
     }
     else{
-      dispatch(playTrack(song));
+      dispatch(playTrack(song, trackList));
     }
+    dispatch(changeTrackLike(song.isLike));
   };
 
   const handleLike = (song) => {
     return (event) => {
       event.stopPropagation();
-      const isLike = song.stared_user?.filter(item => item.id === user.id).length > 0;
-      if(isLike || isFavorite){
-        deleteTrackFromFavorite({id: song.id}).then(() => fetchCallback());
+      if(song.isLike || isFavorite){
+        deleteFavoriteTrack(song.id);
       } else {
-        addTrackToFavorite({id: song.id}).then(() => fetchCallback());
+        addFavoriteTrack(song.id);
       }
+      if(song.id === trackToPlay?.id){
+        dispatch(changeTrackLike(!song.isLike));
+      }
+
     }
   };
-
-  const user = JSON.parse(window.localStorage.getItem("user"));
 
   return (
     <S.CenterblockContent>
@@ -48,7 +87,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
         <S.PlaylistTitleCol $width='245'>АЛЬБОМ</S.PlaylistTitleCol>
         <S.PlaylistTitleCol $width='60' $extrastyle="text-align: end;">
           <S.PlaylistTitleSvg alt="time">
-            <use xlinkHref ="img/icon/sprite.svg#icon-watch"></use>
+            <use xlinkHref ="/img/icon/sprite.svg#icon-watch"></use>
           </S.PlaylistTitleSvg>
         </S.PlaylistTitleCol>
       </S.ContentTitle>
@@ -65,13 +104,17 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
         </S.ContentPlayList>
       )}
       
-      {!sceleton && trackList.errorMessage && (
-        <div>{trackList.errorMessage}</div>
+      {!sceleton && errorMessage && (
+        <div>{errorMessage}</div>
       )}
+      {!sceleton && filteredTrackList?.length===0 &&(
+        <div>
 
-      {!sceleton && trackList.list && (
+        <h2>В этом плейлисте нет треков</h2></div>
+      )}
+      {!sceleton && filteredTrackList && (
         <S.ContentPlayList>
-          {trackList.list.map((song) => {
+          {filteredTrackList.map((song) => {
             return <S.PlaylistItem onClick={()=>{handleTrackClick(song)}} key={song.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>
@@ -79,7 +122,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
 
                     { song.id !== trackToPlay?.id && (
                     <S.TrackTitleSvg alt="music">
-                      <use xlinkHref ="img/icon/sprite.svg#icon-note"></use>
+                      <use xlinkHref ="/img/icon/sprite.svg#icon-note"></use>
                     </S.TrackTitleSvg>)}
 
                     { song.id === trackToPlay?.id && trackIsPlaying && (<S.TrackTitlePlaySvg alt="music"/>)}
@@ -101,7 +144,7 @@ function PlaylistContent({sceleton, trackList, isFavorite=false, fetchCallback})
                 </S.TrackAlbum>
                 <div> 
                   <S.TrackTimeSvg alt="time">
-                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.stared_user?.filter(item => item.id === user.id).length > 0 ? "img/icon/sprite.svg#icon-like" : "img/icon/sprite.svg#icon-dislike" }></use>
+                    <use onClick={handleLike(song)} xlinkHref ={isFavorite || song.isLike ? "/img/icon/sprite.svg#icon-like" : "/img/icon/sprite.svg#icon-dislike" }></use>
                   </S.TrackTimeSvg>
                   <span>{Math.floor(song.duration_in_seconds / 60).toString().padStart(2, '0') + ':' + (song.duration_in_seconds % 60).toString().padStart(2, '0')}</span>
                 </div>

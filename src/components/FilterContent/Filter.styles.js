@@ -27,12 +27,17 @@ justify-content: center;
 align-items: flex-start;
 gap: 28px;
 overflow-y: auto;
-height: 150px;
+width: 170px;
+height: 161px;
 display: grid;
 padding-right: 24px;
+::-webkit-scrollbar {
+  display: none;
+}
 `
 
 export const FilterButton = styled.div`
+position: relative;
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -41,9 +46,6 @@ border: 1px solid #ffffff;
 border-radius: 60px;
 padding: 6px 20px;
 
-  &:not(:last-child){
-    margin-right: 10px;
-  }
   &:hover{
     border-color: #d9b6ff;
     color: #d9b6ff;
@@ -54,4 +56,24 @@ padding: 6px 20px;
     color: #ad61ff;
     cursor: pointer;
   }
-`;
+`
+
+export const FilterCounter = styled.div`
+position: absolute;
+right: -8px;
+top: -8px;
+border-radius: 20px;
+background-color: rgb(173, 97, 255);
+width: 30px;
+height: 30px;
+align-items: center;
+justify-content: center;
+display: flex;
+}
+`
+
+export const FilterTop = styled.div`
+position: relative;
+
+`
+

@@ -12,11 +12,22 @@ flex-direction: row;
 -ms-flex-align: center;
 align-items: center;
 margin-bottom: 51px;
+display: flex;
+justify-content: space-between;
 `
 export const FilterTitle = styled.div`
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 24px;
-margin-right: 15px;
+margin: auto;
+`
+export const FilterTitleLeft = styled.div`
+display: flex;
+gap: 15px;
+
+`
+export const FilterTitleRight = styled.div`
+display: flex;
+gap: 15px;
 `

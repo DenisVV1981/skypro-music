@@ -1,18 +1,13 @@
+import { useGetMainTracksQuery } from '../../services/playerAPI';
 import * as S from './SidebarContent.styles';
-import {useState, useEffect} from 'react';
 
 export default function SidebarContent() {
 
-  const [sceleton, setSceleton] = useState(true);
-  useEffect(()=>{
-    setTimeout(()=>{
-      setSceleton(false);
-    },  5000 );
-  });
+  const { isLoading} = useGetMainTracksQuery();
 
     return ( <div>
 
-{sceleton && (
+{isLoading && (
         <S.SidebarBlock>
           <S.SideBarList>
             <S.SidebarItemSceleton>
@@ -25,7 +20,7 @@ export default function SidebarContent() {
         </S.SidebarBlock>   
       )}
 
-      {!sceleton && (
+      {!isLoading && (
             <S.SidebarBlock>
               <S.SideBarList>
                 <S.SidebarItem>
